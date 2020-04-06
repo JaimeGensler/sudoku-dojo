@@ -18,13 +18,13 @@ const Number = styled.p`
 `;
 
 type Props = {
-    isImmutable: boolean;
+    isGiven: boolean;
     currentValue: number;
 };
-function Big({ isImmutable, currentValue }: Props) {
+function Big({ isGiven, currentValue }: Props) {
     return (
-        <Container dark={isImmutable}>
-            <Number bold={isImmutable}>{currentValue}</Number>
+        <Container dark={isGiven}>
+            <Number bold={isGiven}>{currentValue}</Number>
         </Container>
     );
 }

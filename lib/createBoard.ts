@@ -19,7 +19,7 @@ export default function createBoard(puzzle: string, solution: string) {
         board[block - 1] = [
             ...board[block - 1],
             {
-                isImmutable: puzzle[i] === solution[i],
+                isGiven: puzzle[i] === solution[i],
                 currentValue: parseInt(puzzle[i]),
                 solvedValue: parseInt(solution[i]),
                 candidates: [],

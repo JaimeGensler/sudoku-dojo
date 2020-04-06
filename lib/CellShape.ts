@@ -1,5 +1,5 @@
 export type CellShape = {
-    isImmutable: boolean;
+    isGiven: boolean;
     currentValue: number;
     solvedValue: number;
     candidates: number[];
