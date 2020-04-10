@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import withContext from './withContext';
 
 const Container = styled.div`
     height: 100%;
@@ -18,8 +17,8 @@ const Mark = styled.p`
     justify-content: center;
 `;
 
-type Props = { candidates: number[] };
-function Little({ candidates }: Props) {
+type Props = { candidates: number[]; highlight: string };
+export default function Little({ candidates }: Props) {
     return (
         <Container>
             {candidates.map(num => {
@@ -32,5 +31,3 @@ function Little({ candidates }: Props) {
         </Container>
     );
 }
-
-export default withContext(Little);

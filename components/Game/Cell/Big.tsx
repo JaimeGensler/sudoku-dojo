@@ -1,32 +1,20 @@
 import styled from 'styled-components';
-import withContext from './withContext';
+import * as highlight from './_highlight';
 
-const Container = styled.div`
+const Number = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    background-color: ${props =>
-        props.dark ? 'rgba(0, 0, 0, 0.25)' : 'white'};
-`;
-
-const Number = styled.p`
-    font-weight: ${props => (props.bold ? 'bolder' : 'normal')};
     margin: 0;
     font-size: 24px;
+
+    color: ${highlight.ghostFore};
+    background-color: ${highlight.ghostBack};
 `;
 
-type Props = {
-    isGiven: boolean;
-    currentValue: number;
-};
-function Big({ isGiven, currentValue }: Props) {
-    return (
-        <Container dark={isGiven}>
-            <Number bold={isGiven}>{currentValue}</Number>
-        </Container>
-    );
+type Props = { currentValue: number; highlight: string };
+export default function Big({ currentValue, highlight }: Props) {
+    return <Number highlight={highlight}>{currentValue || null}</Number>;
 }
-
-export default withContext(Big);

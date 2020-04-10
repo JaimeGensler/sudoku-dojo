@@ -1,8 +1,6 @@
-import { createContext } from 'react';
 import styled from 'styled-components';
 
-import useSudokuBoard from '../useSudokuBoard';
-import { CellShape } from '../../lib/CellShape';
+import useSudoku from '../useSudoku';
 import Block from './Block';
 
 const Sudoku = styled.div`
@@ -14,30 +12,21 @@ const Sudoku = styled.div`
     margin: 100px auto;
 
     border: 1px solid black;
+    font-family: sans-serif;
 `;
 
-//it will SCREAM if I don't use this interface to force 'selected' to [number, number]
-interface TESTEROONI {
-    selected: [number, number];
-    dispatch: any;
-}
-const defaultState: TESTEROONI = { selected: [0, 0], dispatch: null };
-export const GameContext = createContext(defaultState);
-const { Provider } = GameContext;
-
 export default function Board() {
-    const [state, dispatch] = useSudokuBoard();
-    const { selected, blocks } = state;
+    const [blocks, clickHandleCreator] = useSudoku();
 
-    const blockComponents = blocks.map((cells: CellShape[]) => {
-        return <Block cells={cells} key={cells[0].block} />;
+    const blockComponents = blocks.map(cells => {
+        return (
+            <Block
+                cells={cells}
+                clickHandleCreator={clickHandleCreator}
+                key={cells[0].block}
+            />
+        );
     });
 
-    return (
-        <Sudoku>
-            <Provider value={{ selected, dispatch }}>
-                {blockComponents}
-            </Provider>
-        </Sudoku>
-    );
+    return <Sudoku>{blockComponents}</Sudoku>;
 }

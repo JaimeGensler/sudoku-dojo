@@ -1,12 +1,7 @@
 import styled from 'styled-components';
 
-import { CellShape } from '../../lib/CellShape';
-import Big from './Cell/Big';
-import Little from './Cell/Little';
-
-type Props = {
-    cells: CellShape[];
-};
+import { CellShape } from '../../lib/types';
+import Cell from './Cell';
 
 const Grid = styled.div`
     display: grid;
@@ -15,14 +10,18 @@ const Grid = styled.div`
     border: 1px solid black;
 `;
 
-export default function Block({ cells }: Props) {
+type Props = {
+    cells: CellShape[];
+    clickHandleCreator: (i: number) => () => void;
+};
+export default function Block({ cells, clickHandleCreator }: Props) {
     const cellComponents = cells.map((cell: CellShape) => {
-        const shouldDisplayLittle = !cell.currentValue && cell.candidates;
-
-        return shouldDisplayLittle ? (
-            <Little {...cell} key={`${cell.row} ${cell.column}`} />
-        ) : (
-            <Big {...cell} key={`${cell.row} ${cell.column}`} />
+        return (
+            <Cell
+                clickHandle={clickHandleCreator(cell.index)}
+                cell={cell}
+                key={`${cell.row} ${cell.column}`}
+            />
         );
     });
 
