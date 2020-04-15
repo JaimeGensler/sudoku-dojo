@@ -1,4 +1,4 @@
-import { CellShape } from './types';
+import { CellShape } from '../types';
 
 const floor3 = (num: number) => Math.floor((num - 1) / 3);
 const getPosition = (index: number) => {
@@ -24,7 +24,7 @@ export default function createBoard(
             solvedValue: parseInt(solution[i]),
             candidates: [],
 
-            highlight: null,
+            highlight: [],
 
             row,
             column,

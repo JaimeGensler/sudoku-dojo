@@ -32,7 +32,11 @@ const cellType = (cell: CellShape) => {
     return <Little candidates={cell.candidates} highlight={cell.highlight} />;
 };
 
-type Props = { cell: CellShape; clickHandle: () => void };
-export default function Cell({ cell, clickHandle }: Props) {
-    return <Border onClick={clickHandle}>{cellType(cell)}</Border>;
+type Props = { cell: CellShape; handleClick: (i: number) => void };
+export default function Cell({ cell, handleClick }: Props) {
+    return (
+        <Border onClick={() => handleClick(cell.index)}>
+            {cellType(cell)}
+        </Border>
+    );
 }

@@ -1,20 +1,21 @@
-import { useState, useEffect } from 'react';
+import useGame from './useGame';
+import rules from '../lib/sudoku/rules';
+import keyMap from '../lib/sudoku/keyMap';
 
-import dummyBoard from '../lib/dummyBoard';
-import { CellShape } from '../lib/types';
-import Sudoku from '../lib/Sudoku';
+import dummyBoard from '../lib/sudoku/dummyBoard';
+import * as helpers from '../lib/sudoku/helpers';
+import { Blocks } from '../lib/types';
 
-export default function useSudoku(): [
-    CellShape[][],
-    (i: number) => () => void
-] {
-    const game = new Sudoku(dummyBoard);
+const initialState = {
+    cells: dummyBoard,
+    selected: null as number,
+};
 
-    const clickHandleCreator = (i: number) => {
-        return () => {
-            game.selectCell(i);
-        };
-    };
+export default function useSudoku() {
+    const [state, handleClick] = useGame(initialState, rules, keyMap);
 
-    return [game.getBlocks(), clickHandleCreator];
+    return [helpers.getBlocks(state.cells), handleClick] as [
+        Blocks,
+        (payload: number) => void
+    ];
 }

@@ -17,17 +17,16 @@ const Mark = styled.p`
     justify-content: center;
 `;
 
-type Props = { candidates: number[]; highlight: string };
+type Strum = string | number;
+type Props = { candidates: number[]; highlight: Strum[] };
 export default function Little({ candidates }: Props) {
-    return (
-        <Container>
-            {candidates.map(num => {
-                return (
-                    <Mark spot={num} key={num}>
-                        {num}
-                    </Mark>
-                );
-            })}
-        </Container>
-    );
+    const candidateComponents = candidates.map(num => {
+        return (
+            <Mark spot={num} key={num}>
+                {num}
+            </Mark>
+        );
+    });
+
+    return <Container>{candidateComponents}</Container>;
 }

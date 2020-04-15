@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// import useSudoku from '../useSudoku';
 import useSudoku from '../useSudoku';
 import Block from './Block';
 
@@ -16,13 +17,13 @@ const Sudoku = styled.div`
 `;
 
 export default function Board() {
-    const [blocks, clickHandleCreator] = useSudoku();
+    const [blocks, handleClick] = useSudoku();
 
     const blockComponents = blocks.map(cells => {
         return (
             <Block
                 cells={cells}
-                clickHandleCreator={clickHandleCreator}
+                handleClick={handleClick}
                 key={cells[0].block}
             />
         );
