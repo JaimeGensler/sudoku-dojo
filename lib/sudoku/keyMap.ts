@@ -1,4 +1,6 @@
-const keyMap = {
+import { KeyMap } from '../../components/useGame';
+
+const keyMap: KeyMap = {
     '0': { type: 'SET_VALUE', payload: 0 },
     '1': { type: 'SET_VALUE', payload: 1 },
     '2': { type: 'SET_VALUE', payload: 2 },
@@ -22,14 +24,14 @@ const keyMap = {
     '*': { type: 'ALT', payload: 8 },
     '(': { type: 'ALT', payload: 9 },
 
-    ArrowUp: { type: 'MOVE_SELECTED', payload: -9 },
-    ArrowLeft: { type: 'MOVE_SELECTED', payload: -1 },
-    ArrowDown: { type: 'MOVE_SELECTED', payload: 9 },
-    ArrowRight: { type: 'MOVE_SELECTED', payload: 1 },
-    w: { type: 'MOVE_SELECTED', payload: -9 },
-    a: { type: 'MOVE_SELECTED', payload: -1 },
-    s: { type: 'MOVE_SELECTED', payload: 9 },
-    d: { type: 'MOVE_SELECTED', payload: 1 },
+    ArrowUp: { type: 'MOVE_SELECT', payload: -9 },
+    ArrowLeft: { type: 'MOVE_SELECT', payload: -1 },
+    ArrowDown: { type: 'MOVE_SELECT', payload: 9 },
+    ArrowRight: { type: 'MOVE_SELECT', payload: 1 },
+    w: { type: 'MOVE_SELECT', payload: -9 },
+    a: { type: 'MOVE_SELECT', payload: -1 },
+    s: { type: 'MOVE_SELECT', payload: 9 },
+    d: { type: 'MOVE_SELECT', payload: 1 },
 };
 
 export default keyMap;

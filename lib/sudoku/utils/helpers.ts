@@ -1,14 +1,29 @@
-import { Blocks, CellShape } from '../types';
-
-export const getBlocks = (cells: CellShape[]) => {
-    const blocks: Blocks = Array.from({ length: 9 }, () => []);
-    cells.forEach(cell => blocks[cell.block - 1].push(cell));
-    return blocks;
-};
+import { SudokuCell } from '../types';
 
 export const removeElementFromArray = (element: any, array: any[]) => {
     array.splice(array.indexOf(element), 1);
 };
+
+export const notifyNeighbors = (
+    notifier: (draftOfNeighbor: any) => void,
+    draft,
+    { selected, cells },
+    includeSelf = false
+) => {
+    const { row, column, block } = cells[selected];
+    cells.forEach(cell => {
+        if (selected === cell.index && !includeSelf) return;
+        if (
+            row === cell.row ||
+            column === cell.column ||
+            block === cell.block
+        ) {
+            notifier(draft.cells[cell.index]);
+        }
+    });
+};
+
+//old stuff
 
 export const getNeighbors = state => {
     //there's definitely a good mathy way to do this but I can't be bothered to figure it out

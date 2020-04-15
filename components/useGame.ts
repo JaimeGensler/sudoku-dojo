@@ -2,28 +2,46 @@ import { useEffect } from 'react';
 import { useImmer } from 'use-immer';
 import { Draft } from 'immer';
 
-interface Rule<S> {
-    condition?: (currentState: S, actionPayload: unknown) => boolean;
-    modifier: (draft?: Draft<S>, currentState?: S, payload?: unknown) => void;
+export interface Rules<S> {
+    [ruleName: string]: {
+        condition?: (currentState: S, actionPayload: unknown) => boolean;
+        modifier: (
+            draft?: Draft<S>,
+            currentState?: S,
+            payload?: unknown
+        ) => void;
+    };
 }
-type Rules<S> = { [ruleName: string]: Rule<S> };
-interface KeyMap {
+export interface KeyMap {
     [key: string]: {
         type: string;
         payload?: unknown; //payload should be renamed
     };
 }
 
-export default function useGame<S>(
-    initialState: S,
-    rules: Rules<S>,
-    keyMap: KeyMap
-) {
-    const [state, updateState] = useImmer(initialState);
+//I may want to turn initialize into an object that lets us preprocess the state return (i.e. for sudoku, just return blocks)
+interface Game<S> {
+    initialize: () => S;
+    rules: Rules<S>;
+    keyMap: KeyMap;
+}
 
-    const applyRule = (rule: Rule<S>, payload: unknown) => {
-        const { condition, modifier } = rule;
-        //Conditions are optional - use it if found, otherwise give true (unconditioned rules always run)
+export default function useGame<S>(
+    game: Game<S>
+): [S, (ruleName: string, payload: unknown) => void] {
+    const { initialize, rules, keyMap } = game;
+    const [state, updateState] = useImmer(initialize());
+
+    const applyRule = (ruleName: string, payload: unknown) => {
+        //If the rule cannot be found, throw error
+        if (rules[ruleName] === undefined) {
+            throw new Error(
+                `Attempted to call rule named '${ruleName}', but no such rule was found.`
+            );
+        }
+
+        const { condition, modifier } = rules[ruleName];
+        //Conditions are optional - use it if found, otherwise use true (unconditioned rules always run)
         const shouldExecuteModifier = condition
             ? condition(state, payload)
             : true;
@@ -31,7 +49,16 @@ export default function useGame<S>(
         if (shouldExecuteModifier) {
             updateState(draft => {
                 //This gives the modifier a value that SHOULD be mutated, followed by
-                //a value that should NEVER be mutated. That's probably not good.
+                //a value that should NEVER be mutated. That seems not good.
+
+                //At the same time, immer's draft makes things easier, and the alternative
+                //would be to supply the current immutable state and require a return of the
+                //fully reconstructed new state, which doesn't feel like a meaningful improvement.
+
+                //Alternatively, I could move my own immer usage to the rules,
+                //and have this hook remain immer free. That might be an actual improvement?
+
+                //It looks like it's possible to find state for primitives in draft. Maybe I just use that?
                 modifier(draft, state, payload);
             });
         }
@@ -40,40 +67,18 @@ export default function useGame<S>(
     const handleKeyPress = (e: KeyboardEvent) => {
         //Find what we're supposed to do
         const action = keyMap[e.key];
-        //If there's no corresponding key, there is no further work to do
+        //If there is no action mapped to the key, there is no further work to do
         if (action === undefined) return;
-        //If the action is malformed or there is no corresponding rule, throw error
-        if (action.type === undefined || rules[action.type] === undefined) {
-            throw new Error(
-                'useGame could not find a corresponding rule for that input.'
-            );
-        }
-        applyRule(rules[action.type], action.payload);
+
+        applyRule(action.type, action.payload);
     };
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [state]);
+    //state should be a dependency here, right? can't apply once and forget? don't need anything else?
 
-    const handleClick = (payload?: unknown) => {
-        //this logic is heavily repeated, probably merge the two functions somewhere
-        if (rules.CLICK === undefined) {
-            throw new Error(
-                "Could not find rule for 'CLICK'. Please include a 'CLICK' key in your ruleset if you would like to use the click handler."
-            );
-        }
-        const { condition, modifier } = rules.CLICK;
-        const shouldExecuteModifier = condition
-            ? condition(state, payload)
-            : true;
-
-        if (shouldExecuteModifier) {
-            updateState(draft => {
-                modifier(draft, state, payload);
-            });
-        }
-    };
-
-    return [state, handleClick] as [S, (payload?: unknown) => void];
+    //I originally had an abstraction that didn't directly return applyRule - doesn't seem like an improvement, but was it?
+    return [state, applyRule];
 }

@@ -1,4 +1,4 @@
-import { CellShape } from '../types';
+import { SudokuCell } from '../types';
 
 const floor3 = (num: number) => Math.floor((num - 1) / 3);
 const getPosition = (index: number) => {
@@ -11,7 +11,7 @@ const getPosition = (index: number) => {
 export default function createBoard(
     puzzle: string,
     solution: string
-): CellShape[] {
+): SudokuCell[] {
     if (puzzle.length !== 81 || solution.length !== 81) {
         throw new Error('Wrong Puzzle Length LMAO');
     }
@@ -39,7 +39,7 @@ export default function createBoard(
 //         throw new Error('Wrong Puzzle Length LMAO');
 //     }
 
-//     const board: CellShape[][] = Array(9).fill([]);
+//     const board: SudokuCell[][] = Array(9).fill([]);
 //     for (let i = 0; i < 81; i++) {
 //         const [row, column, block] = getPosition(i);
 //         board[block - 1] = [

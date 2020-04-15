@@ -1,0 +1,13 @@
+[?] Possibly relocate useGame to lib? (probably not, it belongs to React)
+
+[_] Rename "action" on keymap - currently "action" with { type, payload }
+
+[_] Allow action.type to be a function that takes in context and returns a rule to use.
+
+[_] Build out Sudoku's actions.ts, merge with helpers.ts
+
+[_] Rebuild Sudoku Cell's highlighting function
+
+[_] Abstract shared rules, state, keys, and types between Sudoku and KenKen
+
+[_] Re-Type rule names and other to Enums, if possible and convenient

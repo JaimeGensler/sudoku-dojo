@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // import useSudoku from '../useSudoku';
-import useSudoku from '../useSudoku';
+import useSudoku from './useSudoku';
 import Block from './Block';
 
 const Sudoku = styled.div`
