@@ -1,29 +1,13 @@
 import { KeyMap } from '../../components/useGame';
+import { SudokuState } from './types';
 
-const keyMap: KeyMap = {
-    '0': { type: 'SET_VALUE', payload: 0 },
-    '1': { type: 'SET_VALUE', payload: 1 },
-    '2': { type: 'SET_VALUE', payload: 2 },
-    '3': { type: 'SET_VALUE', payload: 3 },
-    '4': { type: 'SET_VALUE', payload: 4 },
-    '5': { type: 'SET_VALUE', payload: 5 },
-    '6': { type: 'SET_VALUE', payload: 6 },
-    '7': { type: 'SET_VALUE', payload: 7 },
-    '8': { type: 'SET_VALUE', payload: 8 },
-    '9': { type: 'SET_VALUE', payload: 9 },
-    Backspace: { type: 'SET_VALUE', payload: 0 },
-    Delete: { type: 'SET_VALUE', payload: 0 },
+const numberInputType = ({ options }: SudokuState) => {
+    return `SET_${options.mode}`; //SET_VALUE or SET_CANDIDATE
+};
 
-    '!': { type: 'ALT', payload: 1 },
-    '@': { type: 'ALT', payload: 2 },
-    '#': { type: 'ALT', payload: 3 },
-    $: { type: 'ALT', payload: 4 },
-    '%': { type: 'ALT', payload: 5 },
-    '^': { type: 'ALT', payload: 6 },
-    '&': { type: 'ALT', payload: 7 },
-    '*': { type: 'ALT', payload: 8 },
-    '(': { type: 'ALT', payload: 9 },
-
+//0 works differently so make sure to change that
+//it maybe doesn't matter
+const keyMap: KeyMap<SudokuState> = {
     ArrowUp: { type: 'MOVE_SELECT', payload: -9 },
     ArrowLeft: { type: 'MOVE_SELECT', payload: -1 },
     ArrowDown: { type: 'MOVE_SELECT', payload: 9 },
@@ -32,6 +16,31 @@ const keyMap: KeyMap = {
     a: { type: 'MOVE_SELECT', payload: -1 },
     s: { type: 'MOVE_SELECT', payload: 9 },
     d: { type: 'MOVE_SELECT', payload: 1 },
+
+    '0': { type: 'SET_VALUE', payload: 0 },
+    '1': { type: numberInputType, payload: 1 },
+    '2': { type: numberInputType, payload: 2 },
+    '3': { type: numberInputType, payload: 3 },
+    '4': { type: numberInputType, payload: 4 },
+    '5': { type: numberInputType, payload: 5 },
+    '6': { type: numberInputType, payload: 6 },
+    '7': { type: numberInputType, payload: 7 },
+    '8': { type: numberInputType, payload: 8 },
+    '9': { type: numberInputType, payload: 9 },
+    Backspace: { type: 'SET_VALUE', payload: 0 },
+    Delete: { type: 'SET_VALUE', payload: 0 },
+
+    '!': { type: numberInputType, payload: 1 },
+    '@': { type: numberInputType, payload: 2 },
+    '#': { type: numberInputType, payload: 3 },
+    $: { type: numberInputType, payload: 4 },
+    '%': { type: numberInputType, payload: 5 },
+    '^': { type: numberInputType, payload: 6 },
+    '&': { type: numberInputType, payload: 7 },
+    '*': { type: numberInputType, payload: 8 },
+    '(': { type: numberInputType, payload: 9 },
+
+    n: { type: 'SET_INPUT_MODE' },
 };
 
 export default keyMap;

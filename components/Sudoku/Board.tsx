@@ -8,10 +8,11 @@ const Sudoku = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 540px;
-    height: 540px;
-    margin: 100px auto;
 
+    width: 70vh;
+    height: 70vh;
+
+    margin: 100px auto;
     border: 1px solid black;
     font-family: sans-serif;
 `;

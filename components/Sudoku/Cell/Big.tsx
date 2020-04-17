@@ -10,8 +10,8 @@ const Number = styled.div`
     margin: 0;
     font-size: 24px;
 
-    color: ${highlight.ghostFore};
-    background-color: ${highlight.ghostBack};
+    color: ${highlight.bigFore};
+    background-color: ${highlight.bigBack};
 `;
 
 type Strum = string | number;

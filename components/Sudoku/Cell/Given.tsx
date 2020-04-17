@@ -10,7 +10,6 @@ const Number = styled.div`
     font-weight: bold;
     margin: 0;
     font-size: 24px;
-    width: 100;
 
     background-color: ${highlight.givenBack};
     color: ${highlight.givenFore};

@@ -26,7 +26,7 @@ export const givenBack = ({ highlight }: Props) => {
     }
     return 'lightgray';
 };
-export const ghostFore = ({ highlight }: Props) => {
+export const bigFore = ({ highlight }: Props) => {
     if (highlight.includes('SELECTED') && highlight.length > 1) {
         return converter.BOTH;
     } else if (highlight.includes('SELECTED')) {
@@ -36,7 +36,7 @@ export const ghostFore = ({ highlight }: Props) => {
     }
     return 'black';
 };
-export const ghostBack = ({ highlight }: Props) => {
+export const bigBack = ({ highlight }: Props) => {
     if (highlight.includes('SELECTED') && highlight.length > 1) {
         return 'rgba(173, 129, 196, 0.2)';
     } else if (highlight.includes('SELECTED')) {
@@ -45,4 +45,15 @@ export const ghostBack = ({ highlight }: Props) => {
         return 'rgba(225, 23, 23, 0.2)';
     }
     return 'white';
+};
+
+export const littleFore = ({ highlight }: Props) => {
+    if (highlight.includes('SELECTED') && highlight.length > 1) {
+        return converter.BOTH;
+    } else if (highlight.includes('SELECTED')) {
+        return converter.SELECTED;
+    } else if (highlight.length > 0) {
+        return converter.ERROR;
+    }
+    return 'dimgray';
 };

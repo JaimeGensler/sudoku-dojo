@@ -5,25 +5,21 @@ import { Draft } from 'immer';
 export interface Rules<S> {
     [ruleName: string]: {
         condition?: (currentState: S, actionPayload: unknown) => boolean;
-        modifier: (
-            draft?: Draft<S>,
-            currentState?: S,
-            payload?: unknown
-        ) => void;
-    };
-}
-export interface KeyMap {
-    [key: string]: {
-        type: string;
-        payload?: unknown; //payload should be renamed
+        modifier: (draft?: Draft<S>, payload?: unknown) => void;
     };
 }
 
-//I may want to turn initialize into an object that lets us preprocess the state return (i.e. for sudoku, just return blocks)
+export interface KeyMap<S> {
+    [key: string]: {
+        type: string | ((currentState: S) => string);
+        payload?: unknown;
+    };
+}
+
 interface Game<S> {
     initialize: () => S;
     rules: Rules<S>;
-    keyMap: KeyMap;
+    keyMap: KeyMap<S>;
 }
 
 export default function useGame<S>(
@@ -35,6 +31,8 @@ export default function useGame<S>(
     const applyRule = (ruleName: string, payload: unknown) => {
         //If the rule cannot be found, throw error
         if (rules[ruleName] === undefined) {
+            //Typescript can maybe save me from this check
+            //The error message is a pretty helpful catch tho.
             throw new Error(
                 `Attempted to call rule named '${ruleName}', but no such rule was found.`
             );
@@ -48,37 +46,31 @@ export default function useGame<S>(
 
         if (shouldExecuteModifier) {
             updateState(draft => {
-                //This gives the modifier a value that SHOULD be mutated, followed by
-                //a value that should NEVER be mutated. That seems not good.
-
-                //At the same time, immer's draft makes things easier, and the alternative
-                //would be to supply the current immutable state and require a return of the
-                //fully reconstructed new state, which doesn't feel like a meaningful improvement.
-
-                //Alternatively, I could move my own immer usage to the rules,
-                //and have this hook remain immer free. That might be an actual improvement?
-
-                //It looks like it's possible to find state for primitives in draft. Maybe I just use that?
-                modifier(draft, state, payload);
+                //Would it be preferable to make this just use useState, and push
+                //the immer usage into the rules (i.e., wrap modifiers in produce)?
+                modifier(draft, payload);
             });
         }
     };
 
     const handleKeyPress = (e: KeyboardEvent) => {
-        //Find what we're supposed to do
+        //Find what the action mapped to the key
         const action = keyMap[e.key];
         //If there is no action mapped to the key, there is no further work to do
         if (action === undefined) return;
 
-        applyRule(action.type, action.payload);
+        const ruleName =
+            typeof action.type === 'string' ? action.type : action.type(state);
+        applyRule(ruleName, action.payload);
     };
 
     useEffect(() => {
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [state]);
-    //state should be a dependency here, right? can't apply once and forget? don't need anything else?
+    //Are further dependencies needed?
 
-    //I originally had an abstraction that didn't directly return applyRule - doesn't seem like an improvement, but was it?
+    //I originally had an abstraction that didn't directly return applyRule -
+    //Is there an actually good way I should do that?
     return [state, applyRule];
 }

@@ -1,32 +1,37 @@
 import styled from 'styled-components';
+import * as highlight from './_highlight';
 
 const Container = styled.div`
     height: 100%;
     display: grid;
-    grid-template:
-        's1 s2 s3'
-        's4 s5 s6'
-        's7 s8 s9';
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    background-color: ${highlight.bigBack};
 `;
-const Mark = styled.p`
-    color: dimgray;
-    margin: 0;
-    grid-area: ${props => `s${props.spot}`};
+const Mark = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+
+    grid-area: ${props =>
+        `${Math.ceil(props.spot / 3)} / ${1 + ((props.spot - 1) % 3)}`};
+    font-size: 0.7rem;
+    height: 100%;
+
+    color: ${highlight.littleFore};
+    background-color: transparent;
 `;
 
 type Strum = string | number;
 type Props = { candidates: number[]; highlight: Strum[] };
-export default function Little({ candidates }: Props) {
+export default function Little({ candidates, highlight }: Props) {
     const candidateComponents = candidates.map(num => {
         return (
-            <Mark spot={num} key={num}>
+            <Mark spot={num} highlight={highlight} key={num}>
                 {num}
             </Mark>
         );
     });
 
-    return <Container>{candidateComponents}</Container>;
+    return <Container highlight={highlight}>{candidateComponents}</Container>;
 }
