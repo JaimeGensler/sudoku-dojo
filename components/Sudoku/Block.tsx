@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { CellShape } from '../../lib/types';
+import { SudokuCell } from '../../lib/sudoku/types';
 import Cell from './Cell';
 
 const Grid = styled.div`
@@ -11,14 +11,14 @@ const Grid = styled.div`
 `;
 
 type Props = {
-    cells: CellShape[];
-    clickHandleCreator: (i: number) => () => void;
+    cells: SudokuCell[];
+    handleClick: (i: number) => void;
 };
-export default function Block({ cells, clickHandleCreator }: Props) {
-    const cellComponents = cells.map((cell: CellShape) => {
+export default function Block({ cells, handleClick }: Props) {
+    const cellComponents = cells.map((cell: SudokuCell) => {
         return (
             <Cell
-                clickHandle={clickHandleCreator(cell.index)}
+                handleClick={handleClick}
                 cell={cell}
                 key={`${cell.row} ${cell.column}`}
             />

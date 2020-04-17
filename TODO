@@ -1,0 +1,12 @@
+[?] Re-Type rule names and other to Enums, if possible and convenient
+
+[X] Allow action.type to be a function that takes in currentState and returns a rule to use.
+
+[_] Rebuild Sudoku Cell's highlighting function
+
+[_] Abstract shared rules, state, keys, and types between Sudoku and KenKen
+
+[_] Investigate if cells can and should be class instances (would allow helpers to live on the cell)
+        (There might be other alternatives to classes that work just as well)
+
+[_] FIX THAT WEIRD GODDAMN GAP ON THE RIGHT SIDE OF BLOCKS

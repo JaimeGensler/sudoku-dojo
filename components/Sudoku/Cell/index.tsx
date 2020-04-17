@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { CellShape } from '../../../lib/types';
+import { SudokuCell } from '../../../lib/sudoku/types';
 import Big from './Big';
 import Little from './Little';
 import Given from './Given';
@@ -18,7 +18,7 @@ const Border = styled.div`
     }
 `;
 
-const cellType = (cell: CellShape) => {
+const cellType = (cell: SudokuCell) => {
     if (cell.isGiven) {
         return (
             <Given solvedValue={cell.solvedValue} highlight={cell.highlight} />
@@ -32,7 +32,11 @@ const cellType = (cell: CellShape) => {
     return <Little candidates={cell.candidates} highlight={cell.highlight} />;
 };
 
-type Props = { cell: CellShape; clickHandle: () => void };
-export default function Cell({ cell, clickHandle }: Props) {
-    return <Border onClick={clickHandle}>{cellType(cell)}</Border>;
+type Props = { cell: SudokuCell; handleClick: (i: number) => void };
+export default function Cell({ cell, handleClick }: Props) {
+    return (
+        <Border onClick={() => handleClick(cell.index)}>
+            {cellType(cell)}
+        </Border>
+    );
 }

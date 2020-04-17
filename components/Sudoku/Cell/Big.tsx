@@ -10,11 +10,12 @@ const Number = styled.div`
     margin: 0;
     font-size: 24px;
 
-    color: ${highlight.ghostFore};
-    background-color: ${highlight.ghostBack};
+    color: ${highlight.bigFore};
+    background-color: ${highlight.bigBack};
 `;
 
-type Props = { currentValue: number; highlight: string };
+type Strum = string | number;
+type Props = { currentValue: number; highlight: Strum[] };
 export default function Big({ currentValue, highlight }: Props) {
     return <Number highlight={highlight}>{currentValue || null}</Number>;
 }

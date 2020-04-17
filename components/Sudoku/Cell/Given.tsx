@@ -10,13 +10,13 @@ const Number = styled.div`
     font-weight: bold;
     margin: 0;
     font-size: 24px;
-    width: 100;
 
-    background-color: ${highlight.fillBack};
-    color: ${highlight.fillFore};
+    background-color: ${highlight.givenBack};
+    color: ${highlight.givenFore};
 `;
 
-type Props = { solvedValue: number; highlight: string };
+type Strum = string | number;
+type Props = { solvedValue: number; highlight: Strum[] };
 export default function Given({ solvedValue, highlight }: Props) {
     return <Number highlight={highlight}>{solvedValue}</Number>;
 }
