@@ -18,7 +18,26 @@ export const isConflict = (cell, newValue) => {
     return newValue !== 0 && newValue === cell.currentValue;
 };
 export const wasConflict = (cellOne, cellTwo) => {
-    return cellOne.highlight.includes(cellTwo.index);
+    return cellOne.hasConflictsWith.includes(cellTwo.index);
+};
+
+export const aggregateCurrentValues = cells => {
+    const initial = Array.from({ length: 9 }, (x, i) => i + 1).reduce(
+        (acc, num) => {
+            acc[`r${num}`] = [];
+            acc[`c${num}`] = [];
+            acc[`b${num}`] = [];
+            return acc;
+        },
+        {}
+    );
+    return cells.reduce((acc, cell) => {
+        if (cell.currentValue === 0) return acc;
+        acc[`r${cell.row}`].push(cell.currentValue);
+        acc[`c${cell.column}`].push(cell.currentValue);
+        acc[`b${cell.block}`].push(cell.currentValue);
+        return acc;
+    }, initial);
 };
 
 //old stuff

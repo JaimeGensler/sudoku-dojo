@@ -22,8 +22,7 @@ const Mark = styled.div`
     background-color: transparent;
 `;
 
-type Strum = string | number;
-type Props = { candidates: number[]; highlight: Strum[] };
+type Props = { candidates: number[]; highlight: string };
 export default function Little({ candidates, highlight }: Props) {
     const candidateComponents = candidates.map(num => {
         return (

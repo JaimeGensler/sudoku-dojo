@@ -14,8 +14,7 @@ const Number = styled.div`
     background-color: ${highlight.bigBack};
 `;
 
-type Strum = string | number;
-type Props = { currentValue: number; highlight: Strum[] };
+type Props = { currentValue: number; highlight: string };
 export default function Big({ currentValue, highlight }: Props) {
     return <Number highlight={highlight}>{currentValue || null}</Number>;
 }

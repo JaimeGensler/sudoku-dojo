@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { SudokuCell } from '../../../lib/sudoku/types';
+import { SudokuCell } from '../../../../lib/sudoku/types';
 import Big from './Big';
 import Little from './Little';
 import Given from './Given';
@@ -21,15 +21,36 @@ const Border = styled.div`
 const cellType = (cell: SudokuCell) => {
     if (cell.isGiven) {
         return (
-            <Given solvedValue={cell.solvedValue} highlight={cell.highlight} />
+            <Given
+                solvedValue={cell.solvedValue}
+                highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
+            />
         );
     }
     if (cell.currentValue || !cell.candidates.length) {
         return (
-            <Big currentValue={cell.currentValue} highlight={cell.highlight} />
+            <Big
+                currentValue={cell.currentValue}
+                highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
+            />
         );
     }
-    return <Little candidates={cell.candidates} highlight={cell.highlight} />;
+    return (
+        <Little
+            candidates={cell.candidates}
+            highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
+        />
+    );
+};
+const getHighlight = (isSelected: boolean, conflicts: number[]) => {
+    if (isSelected) {
+        if (!!conflicts.length) {
+            return 'BOTH';
+        }
+        return 'SELECTED';
+    }
+    if (!!conflicts.length) return 'ERROR';
+    return 'NONE';
 };
 
 type Props = { cell: SudokuCell; handleClick: (i: number) => void };

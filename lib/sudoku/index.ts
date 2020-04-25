@@ -2,10 +2,8 @@ import initialize from './initialize';
 import rules from './rules';
 import keyMap from './keyMap';
 
-const sudoku = {
+export default {
     initialize,
     rules,
     keyMap,
 };
-
-export default sudoku;
