@@ -1,25 +1,18 @@
 import * as helpers from './utils/helpers';
 import { Rules } from '../../components/useGame';
 import { SudokuState, Modes } from './types';
-import { original } from 'immer';
 
-//I can pull primitives directly off of the draft, should I do away with original?
-//or should immer just be put here?
 const rules: Rules<SudokuState> = {
     CLICK_SELECT: {
         condition: ({ selected }, newSelected: number) =>
             selected !== newSelected,
         modifier: (draft, newSelected: number) => {
-            const currentSelected = original(draft).selected;
-
-            if (currentSelected !== null) {
-                helpers.removeElementFromArray(
-                    'SELECTED',
-                    draft.cells[currentSelected].highlight
-                );
+            const { selected, cells } = draft;
+            if (selected !== null) {
+                cells[selected].isSelected = false;
             }
             if (newSelected !== null) {
-                draft.cells[newSelected].highlight.push('SELECTED');
+                cells[newSelected].isSelected = true;
             }
             draft.selected = newSelected;
         },
@@ -34,20 +27,16 @@ const rules: Rules<SudokuState> = {
             return true;
         },
         modifier: (draft, distance: number) => {
-            const currentSelected = original(draft).selected;
+            const { selected, cells } = draft;
 
-            if (currentSelected !== null) {
-                helpers.removeElementFromArray(
-                    'SELECTED',
-                    draft.cells[currentSelected].highlight
-                );
+            if (selected !== null) {
+                cells[selected].isSelected = false;
             }
-            const newSelected = currentSelected + distance;
-            draft.cells[newSelected].highlight.push('SELECTED');
+            const newSelected = selected === null ? 0 : selected + distance;
+            cells[newSelected].isSelected = true;
             draft.selected = newSelected;
         },
     },
-    //switched to not using original() below this point to give it a try
     SET_VALUE: {
         condition: ({ cells, selected }, newValue: number) => {
             return (
@@ -65,16 +54,16 @@ const rules: Rules<SudokuState> = {
                 if (!helpers.isNeighbor(target, neighbor)) return;
 
                 if (helpers.isConflict(neighbor, newValue)) {
-                    target.highlight.push(neighbor.index);
-                    neighbor.highlight.push(target.index);
+                    target.hasConflictsWith.push(neighbor.index);
+                    neighbor.hasConflictsWith.push(target.index);
                 } else if (helpers.wasConflict(target, neighbor)) {
                     helpers.removeElementFromArray(
                         neighbor.index,
-                        target.highlight
+                        target.hasConflictsWith
                     );
                     helpers.removeElementFromArray(
                         target.index,
-                        neighbor.highlight
+                        neighbor.hasConflictsWith
                     );
                 }
             });
@@ -91,11 +80,11 @@ const rules: Rules<SudokuState> = {
                 ) {
                     helpers.removeElementFromArray(
                         neighbor.index,
-                        target.highlight
+                        target.hasConflictsWith
                     );
                     helpers.removeElementFromArray(
                         target.index,
-                        neighbor.highlight
+                        neighbor.hasConflictsWith
                     );
                 }
             });
@@ -115,7 +104,21 @@ const rules: Rules<SudokuState> = {
     },
     AUTOPOPULATE_CANDIDATES: {
         modifier: ({ cells }) => {
-            cells.forEach(cell => {});
+            const currents = helpers.aggregateCurrentValues(cells);
+            cells.forEach(cell => {
+                if (cell.currentValue !== 0) return;
+                const taken = new Set([
+                    ...currents[`r${cell.row}`],
+                    ...currents[`c${cell.column}`],
+                    ...currents[`b${cell.block}`],
+                ]);
+                //Could make an incredibly small gain on speed. This runs 9 tests regardless
+                //of the number of items in the set, when it only needs to remove Set.size elements
+                //from the 1-9 array. Probably not the area to worry about making gains though.
+                cell.candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(
+                    x => !taken.has(x)
+                );
+            });
         },
     },
 };

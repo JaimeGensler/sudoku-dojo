@@ -1,9 +1,8 @@
-import dummyBoard from './utils/dummyBoard';
-import { SudokuState, Modes } from './types';
+import { KenKenState, Modes } from './types';
 
-const initialize = (): SudokuState => {
+const initialize = (): KenKenState => {
     return {
-        cells: dummyBoard,
+        cells: {},
         selected: null,
         options: {
             mode: Modes.VALUE,

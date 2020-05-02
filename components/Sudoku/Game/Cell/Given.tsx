@@ -15,8 +15,7 @@ const Number = styled.div`
     color: ${highlight.givenFore};
 `;
 
-type Strum = string | number;
-type Props = { solvedValue: number; highlight: Strum[] };
+type Props = { solvedValue: number; highlight: string };
 export default function Given({ solvedValue, highlight }: Props) {
     return <Number highlight={highlight}>{solvedValue}</Number>;
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { SudokuCell } from '../../lib/sudoku/types';
+import { SudokuCell } from '../../../lib/sudoku/types';
 import Cell from './Cell';
 
 const Grid = styled.div`
