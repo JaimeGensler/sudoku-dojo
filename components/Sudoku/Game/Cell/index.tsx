@@ -1,9 +1,11 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import { SudokuCell } from '../../../../lib/sudoku/types';
+import sudokuContext from '../../sudokuContext';
 import Big from './Big';
-import Little from './Little';
 import Given from './Given';
+import Little from './Little';
 
 const Border = styled.div`
     &:nth-child(3n-1) {
@@ -53,11 +55,12 @@ const getHighlight = (isSelected: boolean, conflicts: number[]) => {
     return 'NONE';
 };
 
-type Props = { cell: SudokuCell; handleClick: (i: number) => void };
-export default function Cell({ cell, handleClick }: Props) {
-    return (
-        <Border onClick={() => handleClick(cell.index)}>
-            {cellType(cell)}
-        </Border>
-    );
+type Props = { cellIndex: number };
+
+export default function Cell({ cellIndex }: Props) {
+    const { gameState, applyRule } = useContext(sudokuContext);
+    const cell = gameState.cells[cellIndex];
+    const handleClick = () => applyRule('CLICK_SELECT', cellIndex);
+
+    return <Border onClick={handleClick}>{cellType(cell)}</Border>;
 }

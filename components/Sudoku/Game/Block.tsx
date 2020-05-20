@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-
-import { SudokuCell } from '../../../lib/sudoku/types';
 import Cell from './Cell';
 
 const Grid = styled.div`
@@ -10,20 +8,21 @@ const Grid = styled.div`
     border: 1px solid black;
 `;
 
-type Props = {
-    cells: SudokuCell[];
-    handleClick: (i: number) => void;
+const calculateCellIndex = (block: number, cell: number) => {
+    const rowIndex = 9 * (Math.floor(block / 3) * 3 + Math.floor(cell / 3));
+    const colIndex = (cell % 3) + 3 * (block % 3);
+    console.log(rowIndex, colIndex);
+    return rowIndex + colIndex;
 };
-export default function Block({ cells, handleClick }: Props) {
-    const cellComponents = cells.map((cell: SudokuCell) => {
-        return (
-            <Cell
-                handleClick={handleClick}
-                cell={cell}
-                key={`${cell.row} ${cell.column}`}
-            />
-        );
-    });
+
+type Props = { blockIndex: number };
+export default function Block({ blockIndex }: Props) {
+    const cellComponents = Array.from({ length: 9 }, (x, i) => (
+        <Cell
+            cellIndex={calculateCellIndex(blockIndex, i)}
+            key={`${blockIndex} ${i}`}
+        />
+    ));
 
     return <Grid>{cellComponents}</Grid>;
 }

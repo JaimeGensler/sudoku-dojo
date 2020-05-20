@@ -1,30 +1,10 @@
 import { useCallback, useEffect } from 'react';
 import { useImmer } from 'use-immer';
-import { Draft } from 'immer';
-
-export interface Rules<S> {
-    [ruleName: string]: {
-        condition?: (currentState: S, actionPayload: unknown) => boolean;
-        modifier: (draft?: Draft<S>, payload?: unknown) => void;
-    };
-}
-
-export interface KeyMap<S> {
-    [key: string]: {
-        type: string | ((currentState: S) => string);
-        payload?: unknown;
-    };
-}
-
-interface Game<S> {
-    initialize: () => S;
-    rules: Rules<S>;
-    keyMap: KeyMap<S>;
-}
+import { Game } from './useGameTypes';
 
 export default function useGame<S>(
     game: Game<S>
-): [S, (ruleName: string, payload: unknown) => void] {
+): [S, (ruleName: string, payload?: unknown) => void] {
     const { initialize, rules, keyMap } = game;
     const [state, updateState] = useImmer(initialize);
 

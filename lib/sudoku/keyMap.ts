@@ -1,9 +1,8 @@
-import { KeyMap } from '../../components/useGame';
+import { KeyMap } from '../../components/useGameTypes';
 import { SudokuState } from './types';
 
-const numberInputType = ({ options }: SudokuState) => {
-    return `SET_${options.mode}`; //SET_VALUE or SET_CANDIDATE
-};
+//SET_VALUE or SET_CANDIDATE
+const numberInputType = ({ options }: SudokuState) => `SET_${options.mode}`;
 
 const keyMap: KeyMap<SudokuState> = {
     ArrowUp: { type: 'MOVE_SELECT', payload: -9 },
@@ -38,8 +37,8 @@ const keyMap: KeyMap<SudokuState> = {
     '9': { type: numberInputType, payload: 9 },
     '(': { type: numberInputType, payload: 9 },
 
-    n: { type: 'SET_INPUT_MODE' },
-    p: { type: 'AUTOPOPULATE_CANDIDATES' },
+    n: { type: 'TOGGLE_INPUT_MODE' },
+    p: { type: 'POPULATE_CANDIDATES' },
 };
 
 export default keyMap;

@@ -17,7 +17,7 @@ export type SudokuBlocks = SudokuCell[][];
 
 export interface SudokuState {
     cells: SudokuCell[];
-    selected: number;
+    selected: null | number;
     options: {
         mode: Modes;
         autoUpdateCandidates: boolean;

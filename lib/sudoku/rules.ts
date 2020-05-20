@@ -1,5 +1,5 @@
 import * as helpers from './utils/helpers';
-import { Rules } from '../../components/useGame';
+import { Rules } from '../../components/useGameTypes';
 import { SudokuState, Modes } from './types';
 
 const rules: Rules<SudokuState> = {
@@ -46,7 +46,7 @@ const rules: Rules<SudokuState> = {
             );
         },
         modifier: ({ selected, cells }, newValue: number) => {
-            const target = cells[selected];
+            const target = cells[selected as number];
             target.currentValue = newValue;
 
             //notify neighbors
@@ -70,8 +70,15 @@ const rules: Rules<SudokuState> = {
         },
     },
     SET_CANDIDATE: {
+        condition: ({ cells, selected }, newValue: number) => {
+            return (
+                selected !== null &&
+                !cells[selected].isGiven &&
+                cells[selected].currentValue !== newValue
+            );
+        },
         modifier: ({ selected, cells }, candidate: number) => {
-            const target = cells[selected];
+            const target = cells[selected as number];
             target.currentValue = 0;
             cells.forEach(neighbor => {
                 if (
@@ -96,14 +103,15 @@ const rules: Rules<SudokuState> = {
             }
         },
     },
-    SET_INPUT_MODE: {
+    TOGGLE_INPUT_MODE: {
         modifier: ({ options }) => {
             options.mode =
                 options.mode === Modes.VALUE ? Modes.CANDIDATE : Modes.VALUE;
         },
     },
-    AUTOPOPULATE_CANDIDATES: {
+    POPULATE_CANDIDATES: {
         modifier: ({ cells }) => {
+            // This probably isn't the most efficient way to do this, but it's fine for now.
             const currents = helpers.aggregateCurrentValues(cells);
             cells.forEach(cell => {
                 if (cell.currentValue !== 0) return;
