@@ -1,6 +1,7 @@
 # Sudoku Dojo
 
 _A web app to play Sudoku, in which I accidentally recreate Redux_
+
 _by Jaime Gensler_
 
 ## About
