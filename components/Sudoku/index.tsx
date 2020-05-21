@@ -8,6 +8,7 @@ import { Provider } from './sudokuContext';
 import Title from './Other/Title';
 import Board from './Game/Board';
 import SettingsPanel from './SettingsPanel';
+import Github from '../Github';
 
 const { Content } = Layout;
 const Container = styled(Content)`
@@ -35,6 +36,7 @@ export default function Sudoku() {
                     </Panel>
                 </Provider>
             </Container>
+            <Github />
         </Layout>
     );
 }

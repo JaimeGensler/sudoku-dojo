@@ -20,7 +20,7 @@ const keyBindings: { [key: string]: string } = {
 };
 export default function KeyBindingsList() {
     const listItems = Object.keys(keyBindings).map(key => (
-        <Item>
+        <Item key={key}>
             <Label>{key}</Label>
             <Explanation>{keyBindings[key]}</Explanation>
         </Item>
