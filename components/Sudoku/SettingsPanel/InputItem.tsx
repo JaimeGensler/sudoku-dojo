@@ -1,6 +1,6 @@
-import { useContext, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import styled from 'styled-components';
-import { Typography } from 'antd';
+import { Typography, Divider } from 'antd';
 
 const Item = styled.div`
     margin-bottom: 2rem;
@@ -13,7 +13,7 @@ type Props = {
 export default function InputItem({ label, children }: Props) {
     return (
         <Item>
-            <Typography.Title level={4}>{label}</Typography.Title>
+            <Divider orientation="left">{label}</Divider>
             {children}
         </Item>
     );
