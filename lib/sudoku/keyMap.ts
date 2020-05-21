@@ -1,12 +1,9 @@
-import { KeyMap } from '../../components/useGame';
+import { KeyMap } from '../../components/useGameTypes';
 import { SudokuState } from './types';
 
-const numberInputType = ({ options }: SudokuState) => {
-    return `SET_${options.mode}`; //SET_VALUE or SET_CANDIDATE
-};
+//SET_VALUE or SET_CANDIDATE
+const numberInputType = ({ options }: SudokuState) => `SET_${options.mode}`;
 
-//0 works differently so make sure to change that
-//it maybe doesn't matter
 const keyMap: KeyMap<SudokuState> = {
     ArrowUp: { type: 'MOVE_SELECT', payload: -9 },
     ArrowLeft: { type: 'MOVE_SELECT', payload: -1 },
@@ -18,29 +15,30 @@ const keyMap: KeyMap<SudokuState> = {
     d: { type: 'MOVE_SELECT', payload: 1 },
 
     '0': { type: 'SET_VALUE', payload: 0 },
-    '1': { type: numberInputType, payload: 1 },
-    '2': { type: numberInputType, payload: 2 },
-    '3': { type: numberInputType, payload: 3 },
-    '4': { type: numberInputType, payload: 4 },
-    '5': { type: numberInputType, payload: 5 },
-    '6': { type: numberInputType, payload: 6 },
-    '7': { type: numberInputType, payload: 7 },
-    '8': { type: numberInputType, payload: 8 },
-    '9': { type: numberInputType, payload: 9 },
     Backspace: { type: 'SET_VALUE', payload: 0 },
     Delete: { type: 'SET_VALUE', payload: 0 },
 
+    '1': { type: numberInputType, payload: 1 },
     '!': { type: numberInputType, payload: 1 },
+    '2': { type: numberInputType, payload: 2 },
     '@': { type: numberInputType, payload: 2 },
+    '3': { type: numberInputType, payload: 3 },
     '#': { type: numberInputType, payload: 3 },
+    '4': { type: numberInputType, payload: 4 },
     $: { type: numberInputType, payload: 4 },
+    '5': { type: numberInputType, payload: 5 },
     '%': { type: numberInputType, payload: 5 },
+    '6': { type: numberInputType, payload: 6 },
     '^': { type: numberInputType, payload: 6 },
+    '7': { type: numberInputType, payload: 7 },
     '&': { type: numberInputType, payload: 7 },
+    '8': { type: numberInputType, payload: 8 },
     '*': { type: numberInputType, payload: 8 },
+    '9': { type: numberInputType, payload: 9 },
     '(': { type: numberInputType, payload: 9 },
 
-    n: { type: 'SET_INPUT_MODE' },
+    n: { type: 'TOGGLE_INPUT_MODE' },
+    p: { type: 'POPULATE_CANDIDATES' },
 };
 
 export default keyMap;

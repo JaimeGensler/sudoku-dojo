@@ -1,4 +1,6 @@
-import Board from '../components/Sudoku/Board';
+import Sudoku from '../components/Sudoku/';
+import KenKen from '../components/KenKen';
 export default function Home() {
-    return <Board />;
+    return <Sudoku />;
+    // return <KenKen />;
 }

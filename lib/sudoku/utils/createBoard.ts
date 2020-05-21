@@ -24,7 +24,8 @@ export default function createBoard(
             solvedValue: parseInt(solution[i]),
             candidates: [],
 
-            highlight: [],
+            isSelected: false,
+            hasConflictsWith: [],
 
             row,
             column,

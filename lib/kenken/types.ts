@@ -1,4 +1,4 @@
-export interface SudokuCell {
+export interface KenKenCell {
     isGiven: boolean;
     currentValue: number;
     solvedValue: number;
@@ -13,11 +13,11 @@ export interface SudokuCell {
     index: number;
 }
 
-export type SudokuBlocks = SudokuCell[][];
+// export type SudokuBlocks = SudokuCell[][];
 
-export interface SudokuState {
-    cells: SudokuCell[];
-    selected: null | number;
+export interface KenKenState {
+    cells: KenKenCell[];
+    selected: number;
     options: {
         mode: Modes;
         autoUpdateCandidates: boolean;
