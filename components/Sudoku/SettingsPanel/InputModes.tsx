@@ -1,15 +1,15 @@
 import { useContext } from 'react';
-import { Radio, Typography, Form } from 'antd';
+import { Radio } from 'antd';
 import sudokuContext from '../sudokuContext';
+import InputItem from './InputItem';
 
 const { Group, Button } = Radio;
-const { Item } = Form;
 
 export default function InputModes() {
     const { gameState, applyRule } = useContext(sudokuContext);
     const onChange = () => applyRule('TOGGLE_INPUT_MODE');
     return (
-        <Item label="Input Mode" colon={false}>
+        <InputItem label="Input Mode">
             <Group
                 onChange={onChange}
                 buttonStyle="solid"
@@ -18,6 +18,6 @@ export default function InputModes() {
                 <Button value="VALUE">Values</Button>
                 <Button value="CANDIDATE">Candidates</Button>
             </Group>
-        </Item>
+        </InputItem>
     );
 }

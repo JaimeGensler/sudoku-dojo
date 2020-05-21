@@ -1,16 +1,19 @@
 import { useContext } from 'react';
 import { Button } from 'antd';
 import styled from 'styled-components';
+
 import sudokuContext from '../sudokuContext';
+import InputItem from './InputItem';
 
 const Grid = styled.div`
     display: grid;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0.25rem;
 `;
 const Clear = styled(Button)`
-    grid-column: 1 / 4;
+    margin-top: 0.25rem;
+    width: 100%;
 `;
 export default function Numbers() {
     const { gameState, applyRule } = useContext(sudokuContext);
@@ -30,9 +33,9 @@ export default function Numbers() {
     });
 
     return (
-        <Grid>
-            {numberButtons}
+        <InputItem label="Input Numbers">
+            <Grid>{numberButtons}</Grid>
             <Clear onClick={() => applyRule('SET_VALUE', 0)}>Clear</Clear>
-        </Grid>
+        </InputItem>
     );
 }

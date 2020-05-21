@@ -71,11 +71,7 @@ const rules: Rules<SudokuState> = {
     },
     SET_CANDIDATE: {
         condition: ({ cells, selected }, newValue: number) => {
-            return (
-                selected !== null &&
-                !cells[selected].isGiven &&
-                cells[selected].currentValue !== newValue
-            );
+            return selected !== null && !cells[selected].isGiven;
         },
         modifier: ({ selected, cells }, candidate: number) => {
             const target = cells[selected as number];

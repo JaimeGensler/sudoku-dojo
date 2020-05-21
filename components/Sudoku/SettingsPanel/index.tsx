@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Form } from 'antd';
 import InputModes from './InputModes';
 import Numbers from './Numbers';
 import PopulateCandidates from './PopulateCandidates';
@@ -15,11 +14,9 @@ const Container = styled.div`
 export default function SettingsPanel() {
     return (
         <Container>
-            <Form layout="vertical">
-                <InputModes />
-                <PopulateCandidates />
-                <Numbers />
-            </Form>
+            <InputModes />
+            <PopulateCandidates />
+            <Numbers />
         </Container>
     );
 }
