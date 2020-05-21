@@ -11,7 +11,6 @@ const Grid = styled.div`
 const calculateCellIndex = (block: number, cell: number) => {
     const rowIndex = 9 * (Math.floor(block / 3) * 3 + Math.floor(cell / 3));
     const colIndex = (cell % 3) + 3 * (block % 3);
-    console.log(rowIndex, colIndex);
     return rowIndex + colIndex;
 };
 
