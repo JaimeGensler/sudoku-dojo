@@ -18,45 +18,35 @@ const Border = styled.div`
         border-top: 1px solid dimgray;
         border-bottom: 1px solid dimgray;
     }
+    font-family: monospace;
 `;
 
-const cellType = (cell: SudokuCell) => {
-    if (cell.isGiven) {
-        return (
-            <Given
-                solvedValue={cell.solvedValue}
-                highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
-            />
-        );
-    }
-    if (cell.currentValue || !cell.candidates.length) {
-        return (
-            <Big
-                currentValue={cell.currentValue}
-                highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
-            />
-        );
-    }
-    return (
-        <Little
-            candidates={cell.candidates}
-            highlight={getHighlight(cell.isSelected, cell.hasConflictsWith)}
-        />
-    );
-};
-const getHighlight = (isSelected: boolean, conflicts: number[]) => {
+const getHighlight = (
+    isSelected: boolean,
+    conflicts: number[]
+): [number, number, number] => {
     if (isSelected) {
         if (!!conflicts.length) {
-            return 'BOTH';
+            return [173, 129, 196];
         }
-        return 'SELECTED';
+        return [52, 152, 219];
     }
-    if (!!conflicts.length) return 'ERROR';
-    return 'NONE';
+    if (!!conflicts.length) return [225, 23, 23];
+    return [0, 0, 0];
+};
+
+const cellType = (cell: SudokuCell) => {
+    const highlight = getHighlight(cell.isSelected, cell.hasConflictsWith);
+    if (cell.isGiven) {
+        return <Given solvedValue={cell.solvedValue} highlight={highlight} />;
+    }
+    if (cell.currentValue || !cell.candidates.length) {
+        return <Big currentValue={cell.currentValue} highlight={highlight} />;
+    }
+    return <Little candidates={cell.candidates} highlight={highlight} />;
 };
 
 type Props = { cellIndex: number };
-
 export default function Cell({ cellIndex }: Props) {
     const { gameState, applyRule } = useContext(sudokuContext);
     const cell = gameState.cells[cellIndex];

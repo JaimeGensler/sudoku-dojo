@@ -11,6 +11,7 @@ const Sudoku = styled.div`
 
     border: 1px solid black;
     font-family: sans-serif;
+    background-color: white;
 `;
 
 export default function Board() {
