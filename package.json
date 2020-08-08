@@ -2,21 +2,22 @@
     "name": "sudoku-dojo",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "index.ts",
     "scripts": {
-        "dev": "next",
-        "build": "next build",
-        "start": "next start"
+        "dev": "parcel src/index.html",
+        "build": "parcel build src/index.html"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "immer": "^6.0.3"
+        "immer": "^6.0.3",
+        "vue": "^3.0.0-rc.5",
+        "vue-next": "0.0.1"
     },
     "devDependencies": {
         "@types/node": "^13.9.5",
-        "@types/react": "^16.9.27",
+        "parcel-bundler": "^1.12.4",
         "typescript": "^3.8.3"
     }
 }
