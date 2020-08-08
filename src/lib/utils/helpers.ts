@@ -29,7 +29,7 @@ export const aggregateCurrentValues = (cells: SudokuCell[]) => {
             acc[`b${num}`] = [];
             return acc;
         },
-        {} as { [key: string]: number[] }
+        {} as { [key: string]: number[] },
     );
     return cells.reduce((acc, cell) => {
         if (cell.currentValue === 0) return acc;

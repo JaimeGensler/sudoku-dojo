@@ -1,17 +1,20 @@
 <template lang="html">
-    <h1>Hello</h1>
+    <h1 class="font-julius text-5xl text-center text-gray-800">Sudoku Dojo</h1>
+    <Game />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-
-export default {
-    setup() {},
-};
+    import Game from './components/Game.vue';
+    export default {
+        setup() {},
+        components: {
+            Game,
+        },
+    };
 </script>
 
 <style lang="css" scoped>
-h1 {
-    color: green;
-}
+    .font-julius {
+        font-family: 'Julius Sans One', sans-serif;
+    }
 </style>

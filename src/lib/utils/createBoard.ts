@@ -10,7 +10,7 @@ const getPosition = (index: number) => {
 
 export default function createBoard(
     puzzle: string,
-    solution: string
+    solution: string,
 ): SudokuCell[] {
     if (puzzle.length !== 81 || solution.length !== 81) {
         throw new Error('Wrong Puzzle Length LMAO');
