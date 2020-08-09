@@ -1,4 +1,4 @@
-import { KeyMap } from '../../components/useGameTypes';
+import { KeyMap } from './types';
 import { SudokuState } from './types';
 
 //SET_VALUE or SET_CANDIDATE

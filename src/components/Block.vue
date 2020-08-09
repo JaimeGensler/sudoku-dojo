@@ -1,7 +1,11 @@
 <template lang="html">
-    <div class="w-1/3">
-        <h2 class="text-green-500">Block</h2>
-        <Cell />
+    <div class="flex flex-wrap w-1/3 h-1/3 border border-gray-800">
+        <Cell
+            v-for="n in 9"
+            :blockIndex="blockIndex"
+            :blockSubIndex="n"
+            :key="n"
+        />
     </div>
 </template>
 
@@ -11,9 +15,7 @@
         props: {
             blockIndex: Number,
         },
-        setup(props) {
-            console.log(props.blockIndex);
-        },
+        setup() {},
         components: {
             Cell,
         },

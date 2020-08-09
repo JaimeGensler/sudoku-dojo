@@ -1,5 +1,5 @@
 import * as helpers from './utils/helpers';
-import { Rules } from '../../components/useGameTypes';
+import { Rules } from './types';
 import { SudokuState, Modes } from './types';
 
 const rules: Rules<SudokuState> = {
@@ -59,11 +59,11 @@ const rules: Rules<SudokuState> = {
                 } else if (helpers.wasConflict(target, neighbor)) {
                     helpers.removeElementFromArray(
                         neighbor.index,
-                        target.hasConflictsWith
+                        target.hasConflictsWith,
                     );
                     helpers.removeElementFromArray(
                         target.index,
-                        neighbor.hasConflictsWith
+                        neighbor.hasConflictsWith,
                     );
                 }
             });
@@ -83,11 +83,11 @@ const rules: Rules<SudokuState> = {
                 ) {
                     helpers.removeElementFromArray(
                         neighbor.index,
-                        target.hasConflictsWith
+                        target.hasConflictsWith,
                     );
                     helpers.removeElementFromArray(
                         target.index,
-                        neighbor.hasConflictsWith
+                        neighbor.hasConflictsWith,
                     );
                 }
             });
@@ -120,7 +120,7 @@ const rules: Rules<SudokuState> = {
                 //of the number of items in the set, when it only needs to remove Set.size elements
                 //from the 1-9 array. Probably not the area to worry about making gains though.
                 cell.candidates = [1, 2, 3, 4, 5, 6, 7, 8, 9].filter(
-                    x => !taken.has(x)
+                    x => !taken.has(x),
                 );
             });
         },

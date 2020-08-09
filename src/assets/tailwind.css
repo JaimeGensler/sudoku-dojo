@@ -5,3 +5,8 @@
 body {
     @apply bg-gray-200;
 }
+
+.game-board {
+    height: 75vh;
+    width: 75vh;
+}
