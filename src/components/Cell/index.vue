@@ -12,7 +12,7 @@
 
 <script lang="ts">
     import { getCellIndex, getCellStyle, getDisplayLookup } from './helpers';
-    import { consumeGame } from '../utils/provideGame';
+    import { consumeGame } from '../utils/consumeGame';
 
     import Big from './Big.vue';
     import Given from './Given.vue';
