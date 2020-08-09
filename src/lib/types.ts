@@ -40,12 +40,27 @@ export interface SudokuCell {
 
 export type SudokuBoard = Array<SudokuCell>;
 
+// DEPRECATED, will remove later
+export interface SudokuState {
+    cells: SudokuCell[];
+    selected: null | number;
+    options: {
+        mode: Modes;
+        autoUpdateCandidates: boolean;
+    };
+}
+
 export interface SudokuInteralState {
     selected: null | number;
     mode: Modes;
 }
 
+// DEPRECATED, will remove
 export enum Modes {
+    VALUE = 'VALUE',
+    CANDIDATE = 'CANDIDATE',
+}
+export enum SudokuModes {
     VALUE = 'VALUE',
     CANDIDATE = 'CANDIDATE',
 }

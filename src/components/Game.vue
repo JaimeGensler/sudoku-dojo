@@ -9,11 +9,14 @@
 
 <script lang="ts">
     import Block from './Block.vue';
-    import { provideCells } from './utils/state';
+    import { provideGame } from './utils/provideGame';
+    import { easySudoku } from '../lib/old/utils/dummyBoard';
 
     export default {
         setup() {
-            provideCells();
+            provideGame(Symbol.for('sudoku'), {
+                state: easySudoku,
+            });
         },
         components: { Block },
     };

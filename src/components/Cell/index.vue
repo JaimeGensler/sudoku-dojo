@@ -12,7 +12,7 @@
 
 <script lang="ts">
     import { getCellIndex, getCellStyle, getDisplayLookup } from './helpers';
-    import { useCell } from '../utils/state';
+    import { consumeGame } from '../utils/provideGame';
 
     import Big from './Big.vue';
     import Given from './Given.vue';
@@ -25,7 +25,11 @@
             blockSubIndex: { type: Number, required: true },
         },
         setup(props) {
-            const [cell, handleClick] = useCell(getCellIndex(props));
+            const getFromState = (state: any) => state[getCellIndex(props)];
+            const [cell, handleClick] = consumeGame(
+                Symbol.for('sudoku'),
+                getFromState,
+            );
 
             const cellStyle = computed(() =>
                 getCellStyle(cell, props.blockSubIndex),
