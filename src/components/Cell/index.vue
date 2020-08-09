@@ -1,21 +1,23 @@
 <template lang="html">
     <div
         class="flex items-center justify-center w-1/3 h-third bg-white border-gray-700"
-        v-bind:class="cellBorders"
+        :class="cellStyle"
+        @click="handleClick(cell.index)"
     >
-        <Given :value="state.solvedValue" v-if="display.given" />
-        <Big :value="state.currentValue" v-if="display.big" />
-        <Little :values="state.candidates" v-if="display.given" />
+        <Given :value="cell.solvedValue" v-if="display.given" />
+        <Big :value="cell.currentValue" v-if="display.big" />
+        <Little :values="cell.candidates" v-if="display.little" />
     </div>
 </template>
 
 <script lang="ts">
-    import { getCellIndex, getCellBorders, getDisplayLookup } from './helpers';
-    import { injectCell } from '../utils/state';
+    import { getCellIndex, getCellStyle, getDisplayLookup } from './helpers';
+    import { useCell } from '../utils/state';
 
     import Big from './Big.vue';
     import Given from './Given.vue';
     import Little from './Little.vue';
+    import { computed } from 'vue';
 
     export default {
         props: {
@@ -23,16 +25,14 @@
             blockSubIndex: { type: Number, required: true },
         },
         setup(props) {
-            const state = injectCell(getCellIndex(props));
+            const [cell, handleClick] = useCell(getCellIndex(props));
 
-            const cellBorders = getCellBorders(props.blockSubIndex);
-            const display = getDisplayLookup(state);
-            return { cellBorders, state, display };
+            const cellStyle = computed(() =>
+                getCellStyle(cell, props.blockSubIndex),
+            );
+            const display = getDisplayLookup(cell);
+            return { cellStyle, cell, display, handleClick };
         },
-        components: {
-            Big,
-            Given,
-            Little,
-        },
+        components: { Big, Given, Little },
     };
 </script>

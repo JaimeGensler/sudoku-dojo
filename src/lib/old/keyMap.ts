@@ -1,5 +1,5 @@
-import { KeyMap } from './types';
-import { SudokuState } from './types';
+import { KeyMap } from '../types';
+import { SudokuState } from '../types';
 
 //SET_VALUE or SET_CANDIDATE
 const numberInputType = ({ options }: SudokuState) => `SET_${options.mode}`;

@@ -22,13 +22,6 @@ export interface Game<S> {
 
 export type ApplyRule = (ruleName: string, payload?: any) => void;
 
-// === Testing ===
-
-interface FixedLengthArray<T extends any, L extends number> extends Array<T> {
-    0: T;
-    length: L;
-}
-
 // === Other Types ===
 export interface SudokuCell {
     isGiven: boolean;
@@ -45,17 +38,11 @@ export interface SudokuCell {
     index: number;
 }
 
-export type SudokuBoard = FixedLengthArray<SudokuCell, 81>;
+export type SudokuBoard = Array<SudokuCell>;
 
-export type SudokuBlocks = SudokuCell[][];
-
-export interface SudokuState {
-    cells: SudokuCell[];
+export interface SudokuInteralState {
     selected: null | number;
-    options: {
-        mode: Modes;
-        autoUpdateCandidates: boolean;
-    };
+    mode: Modes;
 }
 
 export enum Modes {

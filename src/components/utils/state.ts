@@ -1,35 +1,46 @@
-import { provide, inject } from 'vue';
-import { easySudoku } from '../../lib/utils/dummyBoard';
-import { SudokuBoard } from '../../lib/types';
+import { provide, inject, reactive } from 'vue';
+import { easySudoku } from '../../lib/old/utils/dummyBoard';
+import {
+    SudokuBoard,
+    SudokuCell,
+    Modes,
+    SudokuInteralState,
+} from '../../lib/types';
+import useKeydown from './useKeydown';
 
-const cellKey = Symbol('sudoku:cells');
+const boardKey = Symbol('sudoku:cells');
+const handleClickKey = Symbol('sudoku:handleClick');
 
 export function provideCells() {
-    provide(cellKey, easySudoku);
+    const cellsState = reactive<SudokuBoard>(easySudoku);
+    const internalState = reactive<SudokuInteralState>({
+        selected: null,
+        mode: Modes.VALUE,
+    });
+
+    const handleClick = (cellIndex: number) => {
+        if (internalState.selected !== null) {
+            cellsState[internalState.selected].isSelected = false;
+        }
+        internalState.selected = cellIndex;
+        cellsState[cellIndex].isSelected = true;
+    };
+
+    provide(boardKey, cellsState);
+    provide(handleClickKey, handleClick);
 }
 
-export function injectCell(cellIndex: number) {
-    const cells = inject<SudokuBoard>(cellKey);
+export function useCell(
+    cellIndex: number,
+): [SudokuCell, (num: number) => void] {
+    const cells = inject<SudokuBoard>(boardKey);
+    const handleClick = inject<(num: number) => void>(handleClickKey);
 
-    if (cells === undefined) {
-        throw new TypeError('useBoard(): type of cells was undefined.');
+    if (cells === undefined || handleClick === undefined) {
+        throw new TypeError(
+            'useCell(): type of "cells" or "handleClickCell" was undefined.',
+        );
     }
-    return cells[cellIndex];
+
+    return [cells[cellIndex], handleClick];
 }
-
-// Vue docs recommend this pattern
-// https://v3.vuejs.org/guide/composition-api-provide-inject.html#injection-reactivity
-
-// setup() {
-//   const book = reactive({
-//     title: 'Vue 3 Guide',
-//     author: 'Vue Team'
-//   })
-
-//   function changeBookName() {
-//     book.title = 'Vue 3 Advanced Guide'
-//   }
-
-//   provide('book', book)
-//   provide('changeBookName', changeBookName)
-// }

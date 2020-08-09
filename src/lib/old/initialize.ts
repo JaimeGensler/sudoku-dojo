@@ -1,5 +1,5 @@
 import { easySudoku, hardSudoku } from './utils/dummyBoard';
-import { SudokuState, Modes } from './types';
+import { SudokuState, Modes } from '../types';
 
 hardSudoku;
 const initialize = (): SudokuState => {

@@ -1,6 +1,6 @@
 import * as helpers from './utils/helpers';
-import { Rules } from './types';
-import { SudokuState, Modes } from './types';
+import { Rules } from '../types';
+import { SudokuState, Modes } from '../types';
 
 const rules: Rules<SudokuState> = {
     CLICK_SELECT: {

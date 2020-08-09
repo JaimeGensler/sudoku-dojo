@@ -15,7 +15,7 @@ export function getCellIndex({ blockIndex, blockSubIndex }: CellProps) {
     return 9 * rowIndex + colIndex;
 }
 
-export function getCellBorders(subIndex: number) {
+export function getCellStyle(cell: SudokuCell, subIndex: number) {
     const isCenterRow = [4, 5, 6].includes(subIndex);
     const isCenterCol = [2, 5, 8].includes(subIndex);
     return {
@@ -23,6 +23,8 @@ export function getCellBorders(subIndex: number) {
         'border-r': isCenterCol,
         'border-t': isCenterRow,
         'border-b': isCenterRow,
+        'bg-blue-600': cell.isSelected,
+        'text-white': cell.isSelected,
     };
 }
 

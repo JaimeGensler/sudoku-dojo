@@ -1,4 +1,4 @@
-import { SudokuCell } from '../types';
+import { SudokuBoard } from '../../types';
 
 const floor3 = (num: number) => Math.floor((num - 1) / 3);
 const getPosition = (index: number) => {
@@ -11,9 +11,11 @@ const getPosition = (index: number) => {
 export default function createBoard(
     puzzle: string,
     solution: string,
-): SudokuCell[] {
+): SudokuBoard {
     if (puzzle.length !== 81 || solution.length !== 81) {
-        throw new Error('Wrong Puzzle Length LMAO');
+        throw new RangeError(
+            'createBoard(): puzzle or solution string was not the correct length',
+        );
     }
 
     return Array.from(puzzle, (char, i) => {

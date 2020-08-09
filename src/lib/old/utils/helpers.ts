@@ -1,4 +1,4 @@
-import { SudokuCell } from '../types';
+import { SudokuCell } from '../../types';
 
 //these can all live on the cell
 export const removeElementFromArray = (element: any, array: any[]) => {

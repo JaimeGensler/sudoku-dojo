@@ -16,8 +16,6 @@
             blockIndex: { type: Number, required: true },
         },
         setup() {},
-        components: {
-            Cell,
-        },
+        components: { Cell },
     };
 </script>
