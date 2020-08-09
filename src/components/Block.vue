@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="flex flex-wrap w-1/3 h-1/3 border border-gray-800">
+    <div class="flex flex-wrap w-1/3 h-third border border-gray-800">
         <Cell
             v-for="n in 9"
             :blockIndex="blockIndex"
@@ -10,10 +10,10 @@
 </template>
 
 <script lang="ts">
-    import Cell from './Cell.vue';
+    import Cell from './Cell/index.vue';
     export default {
         props: {
-            blockIndex: Number,
+            blockIndex: { type: Number, required: true },
         },
         setup() {},
         components: {

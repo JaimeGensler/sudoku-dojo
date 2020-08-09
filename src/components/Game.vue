@@ -6,8 +6,11 @@
 
 <script lang="ts">
     import Block from './Block.vue';
+    import { provideCells } from './utils/state';
     export default {
-        setup() {},
+        setup() {
+            provideCells();
+        },
         components: {
             Block,
         },

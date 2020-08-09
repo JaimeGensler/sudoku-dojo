@@ -10,3 +10,7 @@ body {
     height: 75vh;
     width: 75vh;
 }
+
+.h-third {
+    height: 33.333333%;
+}

@@ -20,7 +20,14 @@ export interface Game<S> {
     keyMap: KeyMap<S>;
 }
 
-export type ApplyRule = (ruleName: string, payload?: unknown) => void;
+export type ApplyRule = (ruleName: string, payload?: any) => void;
+
+// === Testing ===
+
+interface FixedLengthArray<T extends any, L extends number> extends Array<T> {
+    0: T;
+    length: L;
+}
 
 // === Other Types ===
 export interface SudokuCell {
@@ -37,6 +44,8 @@ export interface SudokuCell {
     block: number;
     index: number;
 }
+
+export type SudokuBoard = FixedLengthArray<SudokuCell, 81>;
 
 export type SudokuBlocks = SudokuCell[][];
 
