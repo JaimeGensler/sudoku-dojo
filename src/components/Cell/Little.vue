@@ -11,13 +11,11 @@
 </template>
 
 <script lang="ts">
-    import { isReactive } from 'vue';
-    export default {
-        props: {
-            values: { required: true },
-        },
-        setup(props) {
-            console.log(isReactive(props.values));
-        },
-    };
+import { isReactive } from 'vue';
+export default {
+    props: {
+        values: { required: true },
+    },
+    setup(props) {},
+};
 </script>

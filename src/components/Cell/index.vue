@@ -11,40 +11,39 @@
 </template>
 
 <script lang="ts">
-    import { getCellIndex, getCellStyle, getDisplayLookup } from './helpers';
-    import { consumeGame } from '../utils/consumeGame';
+import { getCellIndex, getCellStyle, getDisplayLookup } from './helpers';
+import { consumeGame } from '../utils/consumeGame';
 
-    import Big from './Big.vue';
-    import Given from './Given.vue';
-    import Little from './Little.vue';
-    import { computed } from 'vue';
-    import { SudokuState } from '../../lib/types';
+import Big from './Big.vue';
+import Given from './Given.vue';
+import Little from './Little.vue';
+import { computed } from 'vue';
+import { SudokuState } from '../../lib/types';
 
-    export default {
-        props: {
-            blockIndex: { type: Number, required: true },
-            blockSubIndex: { type: Number, required: true },
-        },
-        setup(props) {
-            const cellIndex = getCellIndex(props);
-            const getFromState = (state: SudokuState) => {
-                return state.cells[getCellIndex(props)];
-            };
-            const [cell, dispatch] = consumeGame(
-                Symbol.for('sudoku'),
-                getFromState,
-            );
-            console.log(cell.candidates);
+export default {
+    props: {
+        blockIndex: { type: Number, required: true },
+        blockSubIndex: { type: Number, required: true },
+    },
+    setup(props) {
+        const cellIndex = getCellIndex(props);
+        const getFromState = (state: SudokuState) => {
+            return state.cells[getCellIndex(props)];
+        };
+        const [cell, dispatch] = consumeGame(
+            Symbol.for('sudoku'),
+            getFromState,
+        );
 
-            const cellStyle = computed(() => {
-                return getCellStyle(cell, props.blockSubIndex);
-            });
-            const shouldRender = computed(() => {
-                return getDisplayLookup(cell);
-            });
+        const cellStyle = computed(() => {
+            return getCellStyle(cell, props.blockSubIndex);
+        });
+        const shouldRender = computed(() => {
+            return getDisplayLookup(cell);
+        });
 
-            return { cellStyle, cell, shouldRender, dispatch };
-        },
-        components: { Big, Given, Little },
-    };
+        return { cellStyle, cell, shouldRender, dispatch };
+    },
+    components: { Big, Given, Little },
+};
 </script>

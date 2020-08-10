@@ -12,7 +12,7 @@ export function provideGame<S extends {}>(
     const dispatch = (ruleName: string, payload: any) => {
         if (rules[ruleName] === undefined) {
             throw new Error(
-                `Attempted to call rule named '${ruleName}', but no such rule was found.`,
+                `provideGame(): Attempted to call rule named '${ruleName}', but no such rule was found.`,
             );
         }
 

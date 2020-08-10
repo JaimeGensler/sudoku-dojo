@@ -14,3 +14,7 @@ body {
 .h-third {
     height: 33.333333%;
 }
+
+.font-julius {
+    font-family: 'Julius Sans One', sans-serif;
+}
