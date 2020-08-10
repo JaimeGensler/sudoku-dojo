@@ -15,6 +15,7 @@ import { isReactive } from 'vue';
 export default {
     props: {
         values: { required: true },
+        color: { type: String, required: true },
     },
     setup(props) {},
 };

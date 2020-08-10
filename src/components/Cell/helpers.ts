@@ -1,3 +1,4 @@
+import { computed } from 'vue';
 import { SudokuCell } from '../../lib/types';
 
 interface CellProps {
@@ -15,26 +16,35 @@ export function getCellIndex({ blockIndex, blockSubIndex }: CellProps) {
     return 9 * rowIndex + colIndex;
 }
 
-export function getCellStyle(cell: SudokuCell, subIndex: number) {
-    const isCenterRow = [4, 5, 6].includes(subIndex);
-    const isCenterCol = [2, 5, 8].includes(subIndex);
-    return {
-        'border-l': isCenterCol,
-        'border-r': isCenterCol,
-        'border-t': isCenterRow,
-        'border-b': isCenterRow,
-        'bg-blue-600': cell.isSelected,
-        'text-white': cell.isSelected,
-    };
-}
+export const getBorders = (cell: SudokuCell, subIndex: number) =>
+    computed(() => {
+        const isCenterRow = [4, 5, 6].includes(subIndex);
+        const isCenterCol = [2, 5, 8].includes(subIndex);
+        return {
+            'border-l': isCenterCol,
+            'border-r': isCenterCol,
+            'border-t': isCenterRow,
+            'border-b': isCenterRow,
+        };
+    });
 
-export function getDisplayLookup({
+export const getShouldRender = ({
     isGiven,
     currentValue,
     candidates,
-}: SudokuCell) {
-    const given = isGiven;
-    const big = !given && (currentValue > 0 || candidates.length === 0);
-    const little = !given && !big;
-    return { given, big, little };
-}
+}: SudokuCell) =>
+    computed(() => {
+        const given = isGiven;
+        const big = !given && (currentValue > 0 || candidates.length === 0);
+        const little = !given && !big;
+        return { given, big, little };
+    });
+
+export const getColor = ({ hasConflictsWith, isSelected }: SudokuCell) =>
+    computed(() => {
+        const error = hasConflictsWith.length > 0;
+        if (error && isSelected) return 'purple';
+        if (error) return 'red';
+        if (isSelected) return 'blue';
+        return 'gray';
+    });
