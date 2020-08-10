@@ -1,6 +1,6 @@
 import { SudokuCell } from '../../types';
 
-//these can all live on the cell
+// these can all live on the cell
 export const removeElementFromArray = (element: any, array: any[]) => {
     array.splice(array.indexOf(element), 1);
 };

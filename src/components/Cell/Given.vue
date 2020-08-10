@@ -1,5 +1,5 @@
 <template lang="html">
-    <span class="font-bold text-xl">{{ value }}</span>
+    <span class="font-bold text-2xl">{{ value }}</span>
 </template>
 
 <script lang="ts">

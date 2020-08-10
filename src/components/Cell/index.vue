@@ -2,11 +2,11 @@
     <div
         class="flex items-center justify-center w-1/3 h-third bg-white border-gray-700"
         :class="cellStyle"
-        @click="handleClick(cell.index)"
+        @click="dispatch('CLICK_SELECT', cell.index)"
     >
-        <Given :value="cell.solvedValue" v-if="display.given" />
-        <Big :value="cell.currentValue" v-if="display.big" />
-        <Little :values="cell.candidates" v-if="display.little" />
+        <Given :value="cell.solvedValue" v-if="shouldRender.given" />
+        <Big :value="cell.currentValue" v-if="shouldRender.big" />
+        <Little :values="cell.candidates" v-if="shouldRender.little" />
     </div>
 </template>
 
@@ -18,6 +18,7 @@
     import Given from './Given.vue';
     import Little from './Little.vue';
     import { computed } from 'vue';
+    import { SudokuState } from '../../lib/types';
 
     export default {
         props: {
@@ -25,17 +26,24 @@
             blockSubIndex: { type: Number, required: true },
         },
         setup(props) {
-            const getFromState = (state: any) => state[getCellIndex(props)];
-            const [cell, handleClick] = consumeGame(
+            const cellIndex = getCellIndex(props);
+            const getFromState = (state: SudokuState) => {
+                return state.cells[getCellIndex(props)];
+            };
+            const [cell, dispatch] = consumeGame(
                 Symbol.for('sudoku'),
                 getFromState,
             );
+            console.log(cell.candidates);
 
-            const cellStyle = computed(() =>
-                getCellStyle(cell, props.blockSubIndex),
-            );
-            const display = getDisplayLookup(cell);
-            return { cellStyle, cell, display, handleClick };
+            const cellStyle = computed(() => {
+                return getCellStyle(cell, props.blockSubIndex);
+            });
+            const shouldRender = computed(() => {
+                return getDisplayLookup(cell);
+            });
+
+            return { cellStyle, cell, shouldRender, dispatch };
         },
         components: { Big, Given, Little },
     };

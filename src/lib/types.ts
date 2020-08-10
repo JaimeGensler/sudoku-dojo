@@ -1,10 +1,11 @@
-import { Draft } from 'immer';
-// === useGame types ===
+// === provideGame types ===
 export interface Rules<S> {
-    [ruleName: string]: {
-        condition?: (currentState: S, actionPayload?: any) => boolean;
-        modifier: (draft: Draft<S>, payload?: any) => void;
-    };
+    [ruleName: string]: Rule<S>;
+}
+
+export interface Rule<S> {
+    condition?: (currentState: S, actionPayload?: any) => boolean;
+    modifier: (reactiveState: S, payload?: any) => void;
 }
 
 export interface KeyMap<S> {
@@ -20,7 +21,7 @@ export interface Game<S> {
     keyMap: KeyMap<S>;
 }
 
-export type ApplyRule = (ruleName: string, payload?: any) => void;
+export type Dispatch = (ruleName: string, payload: any) => void;
 
 // === Other Types ===
 export interface SudokuCell {
@@ -38,28 +39,15 @@ export interface SudokuCell {
     index: number;
 }
 
-export type SudokuBoard = Array<SudokuCell>;
+export type SudokuBoard = SudokuCell[];
 
 // DEPRECATED, will remove later
 export interface SudokuState {
-    cells: SudokuCell[];
+    cells: SudokuBoard;
     selected: null | number;
-    options: {
-        mode: Modes;
-        autoUpdateCandidates: boolean;
-    };
+    mode: SudokuModes;
 }
 
-export interface SudokuInteralState {
-    selected: null | number;
-    mode: Modes;
-}
-
-// DEPRECATED, will remove
-export enum Modes {
-    VALUE = 'VALUE',
-    CANDIDATE = 'CANDIDATE',
-}
 export enum SudokuModes {
     VALUE = 'VALUE',
     CANDIDATE = 'CANDIDATE',

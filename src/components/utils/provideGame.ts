@@ -1,18 +1,43 @@
 import { provide, reactive } from 'vue';
 import useKeydown from './useKeydown';
+import { Game } from '../../lib/types';
 
-interface GameDefinition<S extends object> {
-    state: S;
-}
-
-export function provideGame<S extends object>(
+export function provideGame<S extends {}>(
     gameKey: Symbol,
-    gameDefinition: GameDefinition<S>,
+    gameDefinition: Game<S>,
 ) {
-    const providedState = reactive(gameDefinition.state);
+    const { initialize, rules, keyMap } = gameDefinition;
+    const state = reactive(initialize());
 
-    useKeydown(e => console.log(e.key));
-    const someFunc = () => console.log('Hello from provideGame');
+    const dispatch = (ruleName: string, payload: any) => {
+        if (rules[ruleName] === undefined) {
+            throw new Error(
+                `Attempted to call rule named '${ruleName}', but no such rule was found.`,
+            );
+        }
 
-    provide(gameKey, [providedState, someFunc]);
+        const { condition, modifier } = rules[ruleName];
+        const shouldExecuteModifier = condition
+            ? condition(state as S, payload)
+            : true;
+
+        if (shouldExecuteModifier) {
+            modifier(state as S, payload);
+        }
+    };
+
+    const handleKeydown = (e: KeyboardEvent) => {
+        const action = keyMap[e.key];
+        if (action === undefined) return;
+
+        const ruleName =
+            typeof action.type === 'string'
+                ? action.type
+                : action.type(state as S);
+        dispatch(ruleName, action.payload);
+    };
+
+    useKeydown(handleKeydown);
+
+    provide(gameKey, [state, dispatch]);
 }

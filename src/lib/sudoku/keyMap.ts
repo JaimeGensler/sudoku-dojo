@@ -2,7 +2,7 @@ import { KeyMap } from '../types';
 import { SudokuState } from '../types';
 
 //SET_VALUE or SET_CANDIDATE
-const numberInputType = ({ options }: SudokuState) => `SET_${options.mode}`;
+const numberInputType = ({ mode }: SudokuState) => `SET_${mode}`;
 
 const keyMap: KeyMap<SudokuState> = {
     ArrowUp: { type: 'MOVE_SELECT', payload: -9 },
