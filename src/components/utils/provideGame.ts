@@ -34,6 +34,7 @@ export function provideGame<S extends {}>(
             typeof action.type === 'string'
                 ? action.type
                 : action.type(state as S);
+        console.log(ruleName);
         dispatch(ruleName, action.payload);
     };
 

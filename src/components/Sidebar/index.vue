@@ -6,8 +6,8 @@
             About & Settings
         </h2>
         <Instructions />
-        <NumPad />
         <InputMode />
+        <NumPad />
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="border border-gray-700">
+    <div class="border border-gray-700 flex flex-col mx-auto w-30">
         <div class="flex flex-wrap w-30">
             <button
                 v-for="n in 9"
@@ -10,7 +10,7 @@
                 {{ n }}
             </button>
         </div>
-        <button class="w-full border-t border-gray-700" @click="handleClick(0)">
+        <button class="border-t border-gray-700" @click="handleClick(0)">
             Delete
         </button>
     </div>

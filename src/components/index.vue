@@ -2,7 +2,7 @@
     <Victory v-if="!state.isActive" />
 
     <header>
-        <h1 class="font-julius text-5xl text-center text-gray-800">
+        <h1 class="font-julius text-5xl text-center text-gray-800 mt-6 mb-4">
             Sudoku Dojo
         </h1>
     </header>
