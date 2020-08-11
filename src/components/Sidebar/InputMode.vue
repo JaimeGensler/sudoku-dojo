@@ -50,7 +50,7 @@ export default {
                 dispatch('TOGGLE_INPUT_MODE');
             }
         };
-        return { currentMode, handleClick };
+        return { state, currentMode, handleClick };
     },
 };
 </script>

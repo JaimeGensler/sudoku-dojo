@@ -1,4 +1,4 @@
-import type { Rule, SudokuState } from '../../types';
+import { Rule, SudokuState } from '../../types';
 
 export default {
     condition: ({ selected }, newSelected: number) => selected !== newSelected,

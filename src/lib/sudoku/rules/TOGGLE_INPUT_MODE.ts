@@ -1,5 +1,5 @@
-import type { Rule, SudokuState } from '../../types';
-import { SudokuModes } from '../../types'
+import { Rule, SudokuState } from '../../types';
+import { SudokuModes } from '../../types';
 
 export default {
     modifier: state => {

@@ -1,4 +1,4 @@
-import type { Rule, SudokuState } from '../../types';
+import { Rule, SudokuState } from '../../types';
 import { aggregateCurrentValues } from './helpers';
 
 export default {

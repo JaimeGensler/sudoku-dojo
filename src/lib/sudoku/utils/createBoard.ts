@@ -11,15 +11,17 @@ const getPosition = (index: number) => {
 export default function createBoard(
     puzzle: string,
     solution: string,
-): SudokuBoard {
+): [SudokuBoard, number] {
     if (puzzle.length !== 81 || solution.length !== 81) {
         throw new RangeError(
             'createBoard(): puzzle or solution string was not the correct length',
         );
     }
 
-    return Array.from(puzzle, (char, i) => {
+    let numberOfUnfilled = 0;
+    const board = Array.from(puzzle, (char, i) => {
         const { row, column, block } = getPosition(i);
+        if (char === '0') numberOfUnfilled++;
         return {
             isGiven: char === solution[i],
             currentValue: parseInt(char),
@@ -35,6 +37,7 @@ export default function createBoard(
             index: i,
         };
     });
+    return [board, numberOfUnfilled];
 }
 
 // export default function createBoard(puzzle: string, solution: string) {

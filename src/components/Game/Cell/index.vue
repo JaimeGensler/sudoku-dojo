@@ -25,7 +25,7 @@
 <script lang="ts">
 import { getCellIndex, getComputedValues } from './helpers';
 import { consumeGame } from '../../utils/consumeGame';
-import type { SudokuState } from '../../../lib/types';
+import { SudokuState } from '../../../lib/types';
 
 import Big from './Big.vue';
 import Given from './Given.vue';

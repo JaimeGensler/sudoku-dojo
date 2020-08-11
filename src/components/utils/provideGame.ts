@@ -1,15 +1,15 @@
 import { provide, reactive } from 'vue';
 import useKeydown from './useKeydown';
-import { Game } from '../../lib/types';
+import { Game, Dispatch } from '../../lib/types';
 
 export function provideGame<S extends {}>(
     gameKey: Symbol,
     gameDefinition: Game<S>,
-) {
+): [S, Dispatch] {
     const { initialize, rules, keyMap } = gameDefinition;
     const state = reactive(initialize());
 
-    const dispatch = (ruleName: string, payload: any) => {
+    const dispatch: Dispatch = (ruleName, payload) => {
         if (rules[ruleName] === undefined) {
             throw new Error(
                 `provideGame(): Attempted to call rule named '${ruleName}', but no such rule was found.`,
@@ -38,6 +38,6 @@ export function provideGame<S extends {}>(
     };
 
     useKeydown(handleKeydown);
-
     provide(gameKey, [state, dispatch]);
+    return [state as S, dispatch];
 }

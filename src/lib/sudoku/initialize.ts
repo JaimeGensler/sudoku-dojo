@@ -1,11 +1,12 @@
 import { easySudoku, hardSudoku } from './utils/dummyBoard';
 import { SudokuState, SudokuModes } from '../types';
 
-hardSudoku;
 export default function sudoku(): SudokuState {
     return {
-        cells: easySudoku,
+        cells: easySudoku[0],
         selected: null,
         mode: SudokuModes.VALUE,
+        unfilledCells: easySudoku[1],
+        isActive: true,
     };
 }

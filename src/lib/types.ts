@@ -44,8 +44,10 @@ export type SudokuBoard = SudokuCell[];
 // DEPRECATED, will remove later
 export interface SudokuState {
     cells: SudokuBoard;
+    unfilledCells: number;
     selected: null | number;
     mode: SudokuModes;
+    isActive: boolean;
 }
 
 export enum SudokuModes {

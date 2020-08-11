@@ -1,4 +1,4 @@
-import type { Rules, SudokuState } from '../../types';
+import { Rules, SudokuState } from '../../types';
 
 import CLICK_SELECT from './CLICK_SELECT';
 import MOVE_SELECT from './MOVE_SELECT';
