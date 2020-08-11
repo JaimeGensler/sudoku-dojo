@@ -21,7 +21,7 @@ export interface Game<S> {
     keyMap: KeyMap<S>;
 }
 
-export type Dispatch = (ruleName: string, payload: any) => void;
+export type Dispatch = (ruleName: string, payload?: any) => void;
 
 // === Other Types ===
 export interface SudokuCell {

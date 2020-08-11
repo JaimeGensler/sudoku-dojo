@@ -9,13 +9,8 @@
 
 <script lang="ts">
 import Block from './Block.vue';
-import { provideGame } from './utils/provideGame';
-import sudoku from '../lib/sudoku';
 
 export default {
-    setup() {
-        provideGame(Symbol.for('sudoku'), sudoku);
-    },
     components: { Block },
 };
 </script>

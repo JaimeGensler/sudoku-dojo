@@ -11,11 +11,11 @@
 
 <script lang="ts">
 import Cell from './Cell/index.vue';
+
 export default {
     props: {
         blockIndex: { type: Number, required: true },
     },
-    setup() {},
     components: { Cell },
 };
 </script>

@@ -16,14 +16,11 @@ export default {
         color: { type: String, required: true },
     },
     setup(props) {
-        const colorGetter = () => {
-            // This is entirely silly but I'm too tired to think of a better solution
-            return {
-                [`bg-${props.color}-300`]: true,
-                [`text-${props.color}-800`]: true,
-            };
-        };
-        const colors = computed(colorGetter);
+        const colors = computed(() =>
+            props.color
+                ? `bg-${props.color}-700 text-${props.color}-100`
+                : null,
+        );
         return { colors };
     },
 };

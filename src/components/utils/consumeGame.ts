@@ -1,13 +1,13 @@
 import { inject, isReactive } from 'vue';
 import { Dispatch } from '../../lib/types';
 
-type Consumer = [{}, Dispatch];
+type Consumer = [any, Dispatch];
 type GetFromState<S> = (state: any) => S;
 
 export function consumeGame<S>(
     gameKey: Symbol,
-    getFromState: GetFromState<S>,
-): [S, (ruleName: string, payload: any) => void] {
+    getFromState?: GetFromState<S>,
+): [S, Dispatch] {
     const provided = inject<Consumer>(gameKey);
     if (provided === undefined) {
         throw new TypeError(
@@ -15,7 +15,7 @@ export function consumeGame<S>(
         );
     }
     const [state, dispatch] = provided;
-    const subState = getFromState(state);
+    const subState = getFromState ? getFromState(state) : state;
 
     if (!isReactive(subState)) {
         throw new Error(

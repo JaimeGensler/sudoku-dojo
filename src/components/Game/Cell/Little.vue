@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="w-full h-full flex flex-wrap">
+    <div class="w-full h-full flex flex-wrap" :class="colors">
         <span
             class="h-third w-1/3 text-xs flex items-center justify-center"
             v-for="n in 9"
@@ -11,12 +11,20 @@
 </template>
 
 <script lang="ts">
-import { isReactive } from 'vue';
+import { isReactive, computed } from 'vue';
 export default {
     props: {
         values: { required: true },
         color: { type: String, required: true },
     },
-    setup(props) {},
+    setup(props) {
+        const colors = computed(() =>
+            props.color
+                ? `bg-${props.color}-200 text-${props.color}-700`
+                : null,
+        );
+
+        return { colors };
+    },
 };
 </script>

@@ -5,27 +5,27 @@
         @click="dispatch('CLICK_SELECT', cell.index)"
     >
         <Given
+            v-if="displayType.given"
             :value="cell.solvedValue"
             :color="color"
-            v-if="shouldRender.given"
         />
         <Big
+            v-if="displayType.big"
             :value="cell.currentValue"
             :color="color"
-            v-if="shouldRender.big"
         />
         <Little
+            v-if="displayType.little"
             :values="cell.candidates"
             :color="color"
-            v-if="shouldRender.little"
         />
     </div>
 </template>
 
 <script lang="ts">
-import { getCellIndex, getBorders, getShouldRender, getColor } from './helpers';
-import { consumeGame } from '../utils/consumeGame';
-import type { SudokuState } from '../../lib/types';
+import { getCellIndex, getComputedValues } from './helpers';
+import { consumeGame } from '../../utils/consumeGame';
+import type { SudokuState } from '../../../lib/types';
 
 import Big from './Big.vue';
 import Given from './Given.vue';
@@ -38,15 +38,12 @@ export default {
     },
     setup(props) {
         const [cell, dispatch] = consumeGame(
-            Symbol.for('sudoku'),
+            Symbol.for('sudoku-dojo:game'),
             (state: SudokuState) => state.cells[getCellIndex(props)],
         );
+        const { borders, displayType, color } = getComputedValues(cell);
 
-        const borders = getBorders(cell, props.blockSubIndex);
-        const shouldRender = getShouldRender(cell);
-        const color = getColor(cell);
-
-        return { borders, cell, dispatch, shouldRender, color };
+        return { borders, cell, dispatch, displayType, color };
     },
     components: { Big, Given, Little },
 };
