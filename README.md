@@ -16,18 +16,19 @@ games, too - Minesweeper and KenKen would be good candidates! There is only one
 puzzle available, as making a Sudoku puzzle generator is beyond the scope of
 this project. To check out the experimental state management pieces, please see
 `src/components/utils/provideGame` and `src/components/utils/consumeGame`. To
-see how you might use the game state manager, go to `src/lib/sudoku`. For
-specifically game logic, `src/lib/sudoku/rules`.
+see the game state manager used, go to `src/lib/sudoku`. For specifically game
+logic, `src/lib/sudoku/rules`.
 
 _Built with TypeScript, TailwindCSS, and Vue 3 (rc5)._
 
 ## Check it out!
 
-To be hosted once I have appeased the gh-pages gods.
+Now hosted! Vue (hah) this project on
+[Github Pages](https://www.jaimegensler.github.io/sudoku-dojo)!
 
 Note: I was silly and used Tailwind breakpoints to make it responsive, but
 that's only based on device width, so the game is too tall on some screens
-(oops). I'll likely resolve this in the future.
+(oops). I'll resolve this in the future.
 
 ## Contact
 
