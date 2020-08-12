@@ -24,7 +24,7 @@ _Built with TypeScript, TailwindCSS, and Vue 3 (rc5)._
 ## Check it out!
 
 Now hosted! Vue (hah) this project on
-[Github Pages](www.jaimegensler.github.io/sudoku-dojo)!
+[Github Pages](http://www.jaimegensler.github.io/sudoku-dojo)!
 
 Note: I was silly and used Tailwind breakpoints to make it responsive, but
 that's only based on device width, so the game is too tall on some screens
