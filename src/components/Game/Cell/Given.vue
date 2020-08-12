@@ -8,20 +8,12 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     props: {
         value: { type: Number, required: true },
-        color: { type: String, required: true },
+        colors: { required: true },
     },
-    setup(props) {
-        const colors = computed(() =>
-            props.color
-                ? `bg-${props.color}-700 text-${props.color}-100`
-                : null,
-        );
-        return { colors };
-    },
-};
+});
 </script>

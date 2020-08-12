@@ -1,7 +1,7 @@
 <template lang="html">
-    <div class="w-full h-full flex flex-wrap" :class="colors">
+    <div class="flex flex-wrap h-full w-full" :class="colors">
         <span
-            class="h-third w-1/3 text-xs flex items-center justify-center"
+            class="w-1/3 h-third text-xs flex items-center justify-center"
             v-for="n in 9"
             :key="n"
         >
@@ -11,20 +11,12 @@
 </template>
 
 <script lang="ts">
-import { isReactive, computed } from 'vue';
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
     props: {
         values: { required: true },
-        color: { type: String, required: true },
+        colors: { required: true },
     },
-    setup(props) {
-        const colors = computed(() =>
-            props.color
-                ? `bg-${props.color}-200 text-${props.color}-700`
-                : null,
-        );
-
-        return { colors };
-    },
-};
+});
 </script>

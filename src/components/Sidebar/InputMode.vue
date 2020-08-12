@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="flex mx-auto justify-center">
+    <div class="flex mx-auto justify-center text-sm">
         <button
             class="p-2 border border-gray-700 rounded-l-lg transition-colors duration-150"
             :class="currentMode.VALUE"
@@ -12,7 +12,7 @@
             :class="currentMode.CANDIDATE"
             @click="handleClick('CANDIDATE')"
         >
-            Pencil Marks
+            Candidates
         </button>
     </div>
 </template>
@@ -21,8 +21,9 @@
 import { consumeGame } from '../utils/consumeGame';
 import { SudokuState, SudokuModes } from '../../lib/types';
 import { getModeStyles } from './helpers';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     components: {},
     setup() {
         const [state, dispatch] = consumeGame<SudokuState>(
@@ -36,5 +37,5 @@ export default {
         };
         return { state, currentMode, handleClick };
     },
-};
+});
 </script>

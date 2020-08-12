@@ -15,23 +15,10 @@ h6 {
     @apply text-gray-800;
 }
 
-.game-board {
-    height: 75vh;
-    width: 75vh;
-}
-
-.h-third {
-    height: 33.333333%;
-}
-
 .font-julius {
     font-family: 'Julius Sans One', sans-serif;
 }
 
-.w-30 {
-    width: 7.5rem;
-}
-
-.test {
-    flex: 0 0 33.333333%;
+.h-third {
+    height: 33.333333%;
 }

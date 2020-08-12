@@ -24,8 +24,8 @@ export default function createBoard(
         if (char === '0') numberOfUnfilled++;
         return {
             isGiven: char === solution[i],
-            currentValue: parseInt(char),
-            solvedValue: parseInt(solution[i]),
+            currentValue: parseInt(char, 10),
+            solvedValue: parseInt(solution[i], 10),
             candidates: [],
 
             isSelected: false,

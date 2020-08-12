@@ -17,6 +17,17 @@ export const getCellIndex = ({
     const colIndex = 3 * (blockIndex0 % 3) + (blockSubIndex0 % 3);
     return 9 * rowIndex + colIndex;
 };
+export const getComputedValues = (cell: SudokuCell) => {
+    const displayType = getDisplayType(cell);
+    return {
+        borders: getBorders(cell),
+        displayType,
+        colors: getColors(
+            cell,
+            displayType.value.given ? blockLookup : outlineLookup,
+        ),
+    };
+};
 
 const getBorders = (cell: SudokuCell) =>
     computed(() => {
@@ -39,19 +50,21 @@ const getDisplayType = (cell: SudokuCell) =>
         return { given, big, little };
     });
 
-const getColor = (cell: SudokuCell) =>
+const outlineLookup = {
+    blue: ['bg-blue-200', 'text-blue-700'],
+    purple: ['bg-purple-200', 'text-purple-700'],
+    red: ['bg-red-200', 'text-red-700'],
+};
+const blockLookup = {
+    blue: ['bg-blue-700', 'text-blue-100'],
+    purple: ['bg-purple-700', 'text-purple-100'],
+    red: ['bg-red-700', 'text-red-100'],
+};
+const getColors = (cell: SudokuCell, displayObj: typeof blockLookup) =>
     computed(() => {
         const error = cell.hasConflictsWith.length > 0;
-        if (error && cell.isSelected) return 'purple';
-        if (error) return 'red';
-        if (cell.isSelected) return 'blue';
-        return '';
+        if (error && cell.isSelected) return displayObj['purple'];
+        if (error) return displayObj['red'];
+        if (cell.isSelected) return displayObj['blue'];
+        return null;
     });
-
-export const getComputedValues = (cell: SudokuCell) => {
-    return {
-        borders: getBorders(cell),
-        displayType: getDisplayType(cell),
-        color: getColor(cell),
-    };
-};

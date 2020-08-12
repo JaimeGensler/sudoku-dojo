@@ -19,8 +19,9 @@
 <script lang="ts">
 import { SudokuState } from '../../lib/types';
 import { consumeGame } from '../utils/consumeGame';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     setup() {
         const [state] = consumeGame<SudokuState>(
             Symbol.for('sudoku-dojo:game'),
@@ -28,5 +29,5 @@ export default {
         const handleClick = () => (state.isActive = true);
         return { handleClick };
     },
-};
+});
 </script>
