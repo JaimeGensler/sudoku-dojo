@@ -12,7 +12,7 @@
     "license": "ISC",
     "dependencies": {
         "core-js": "^3.6.5",
-        "immer": "^6.0.3",
+        "immer": "^8.0.1",
         "vue": "^3.0.0-rc.5",
         "vue-next": "0.0.1"
     },
